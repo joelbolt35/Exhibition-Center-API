@@ -1,5 +1,5 @@
 import express = require('express');
-import db from '../db';
+import db from '../../db';
 
 const router: express.Router = express.Router();
 
@@ -12,5 +12,6 @@ router.get('/', async (_req, res, _next) => {
     res.sendStatus(500);
   }
 });
+
 
 export default router;
