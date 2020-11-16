@@ -7,6 +7,14 @@ interface userLogin {
   password: String
 }
 
+router.get('/', (req, res) => {
+  res.render('pages/index');
+});
+
+router.get('/login', (req, res) => {
+  res.render('pages/login');
+});
+
 router.post('/login', (req, res) => {
   let user = {} as userLogin;
   user.email = req.body.email;
