@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const logger = bunyan.createLogger({name: 'db'});
 
-logger.info("Opening MySQL DB connection to exhibition_center")
+logger.info("Opening MySQL DB connection to exhibition_center");
 const pool = mysql.createPool({
   connectionLimit: 100,
   password: process.env.DB_PASS,
@@ -28,8 +28,8 @@ potluckdb.all = () => {
     pool.query(queryString, (err, results) => {
       if (err) return reject(err);
       else return resolve(results);
-    })
-  })
-}
+    });
+  });
+};
 
 export default potluckdb;

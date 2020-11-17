@@ -1,7 +1,7 @@
 export default class CookiesModel {
-  email: string;
+  email?: string;
 
-  constructor(options: { email: string }) {
+  constructor(options: { email: string; }) {
     this.email = options.email;
   }
 }

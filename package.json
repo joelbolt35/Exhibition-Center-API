@@ -30,7 +30,9 @@
     "start": "NODE_ENV=production node dist/server.js",
     "dev": "NODE_ENV=development nodemon server/server.ts -w server -w views | bunyan",
     "build": "tsc",
-    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "fix-lint": "eslint --fix . --ext .js,.jsx,.ts,.tsx",
+    "fix-lint-dry": "eslint --fix-dry-run . --ext .js,.jsx,.ts,.tsx"
   },
   "nodemonConfig": {
     "delay": "2500"

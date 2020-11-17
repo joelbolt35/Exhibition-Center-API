@@ -32,7 +32,7 @@ app.get('*', (req, res, next) => {
     res.locals.user = cookies.user;
   }
   next();
-})
+});
 
 app.use('/', viewsRouter);
 app.use('/api', apiRouter);

@@ -13,4 +13,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
+  rules: {
+    "no-console": 2,
+    "semi": 2,
+    "no-tabs": 1
+  }
 };

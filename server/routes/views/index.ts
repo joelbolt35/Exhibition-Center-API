@@ -1,6 +1,6 @@
 import express from 'express';
 import bunyan from 'bunyan';
-import LoginRouter from './login'
+import LoginRouter from './login';
 import CookiesModel from '../../models/CookiesModel';
 
 const logger = bunyan.createLogger({name: 'views'});
@@ -17,7 +17,7 @@ router.use("/login", LoginRouter);
 
 router.get("/logout", (req, res) => {
   const cookies = req.cookies as CookiesModel;
-  if (Object.keys(cookies.user).length !== 0) {
+  if (cookies.user && Object.keys(cookies.user).length !== 0) {
     logger.info(cookies.user, "'/logout' Clearing cookies. Fetching login page");
     res.clearCookie("user");
   }
