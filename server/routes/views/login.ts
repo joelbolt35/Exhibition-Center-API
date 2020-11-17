@@ -1,6 +1,6 @@
 import express from 'express';
 import bunyan from 'bunyan';
-import AuthModel from '../../models/AuthModel';
+import { AuthModel } from '../../models';
 
 const logger = bunyan.createLogger({name: 'views'});
 const router: express.Router = express.Router();

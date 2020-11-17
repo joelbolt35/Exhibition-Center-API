@@ -5,7 +5,7 @@ import apiRouter from './routes/api';
 import viewsRouter from './routes/views';
 import bunyan from 'bunyan';
 
-import CookiesModel from './models/CookiesModel';
+import { CookiesModel } from './models';
 
 const logger = bunyan.createLogger({name: 'server'});
 const app: express.Application = express();

@@ -1,7 +1,7 @@
 import express from 'express';
 import bunyan from 'bunyan';
 import LoginRouter from './login';
-import CookiesModel from '../../models/CookiesModel';
+import { CookiesModel } from '../../models';
 
 const logger = bunyan.createLogger({name: 'views'});
 const router: express.Router = express.Router();
