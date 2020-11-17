@@ -1,4 +1,4 @@
-export default class CookiesModel {
+export default class PotluckModel {
   id?: number;
   name?: string;
   food?: string;
