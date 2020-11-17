@@ -4,14 +4,14 @@ import bunyan from 'bunyan';
 
 const logger = bunyan.createLogger({name: 'potluck'});
 const router: express.Router = express.Router();
-const basePath = "/api/potluck";
+const currPath = "/api/potluck";
 
 router.get('/', async (_req, res) => {
-  logger.info(`GET ${basePath}/`);
+  logger.info(`GET ${currPath}`);
   try {
     const results = await db.all();
-    logger.info(`GET ${basePath}/ - Success`);
     res.json(results);
+    logger.info(`GET ${currPath} - Success`);
   } catch (e) {
     logger.warn(e);
     res.sendStatus(500);
