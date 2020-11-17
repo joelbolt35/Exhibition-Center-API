@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 
 // Enables express to read cookies
 app.use(cookieParser());
-app.use(express.static(__dirname + 'server/views'));
 
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
