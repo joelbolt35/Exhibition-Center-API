@@ -22,9 +22,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon server/server.ts -w server",
+    "start": "nodemon server/server.ts -w server -w views",
     "build": "tsc --project ./",
     "tsc": "tsc"
+  },
+  "nodemonConfig": {
+    "delay": "2500"
   },
   "author": "",
   "license": "ISC"

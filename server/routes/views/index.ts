@@ -8,36 +8,46 @@ interface userLogin {
 }
 
 router.get('/', (req, res) => {
+  console.log("'route /' Fetching index page");
   res.render('pages/index');
 });
 
-router.use('/login', (req, res) => {
-  if (req.method === 'GET') return res.render('pages/login');
-  if (req.method === 'POST') {
-    let user = {} as userLogin;
-    user.email = req.body.email;
-    user.password = req.body.password;
-    if (!user.email)
-      return res.render('pages/login', {
-        error: "Missing Email"
-      });
-    if (!user.password)
-      return res.render('pages/login', {
-        error: "Missing Password"
-      });
+router.get('/login', (req, res) => {
+  console.log("'route /login' Fetching login page");
+  res.render('pages/login');
+});
 
-    console.log("Logging in with " + user.email + " and " + user.password);
-
-    if (user.password === "invalid") {
-      return res.render('pages/login', {
-        error: "Invalid password"
-      });
-    }
-
-    res.cookie("user", user.email);
-    res.redirect("/");
+router.post('/login', (req, res) => {
+  let user = {} as userLogin;
+  user.email = req.body.email;
+  user.password = req.body.password;
+  console.log(`login POST for ${user.email} : ${user.password}`);
+  if (!user.email) {
+    console.log(`login POST missing email`);
+    return res.render('pages/login', {
+      error: "Missing Email"
+    });
   }
-  return res.sendStatus(404);
+  if (!user.password) {
+    console.log(`login POST missing password`);
+    return res.render('pages/login', {
+      error: "Missing Password"
+    });
+  }
+
+  
+  if (user.password === "invalid") {
+    console.log("login POST password was found to be invalid");
+    return res.render('pages/login', {
+      error: "Invalid password"
+    });
+  }
+  console.log(`login POST successfully logging in with for ${user.email}`);
+  console.log(`login POST setting cookie to {user:${user.email}}`);
+  res.cookie("user", req.body.email);
+
+  console.log(`login POST redirect to /`);
+  res.redirect("/");
 });
 
 router.get("/logout", (req, res) => {

@@ -1,6 +1,7 @@
 import mysql = require('mysql');
 require('dotenv').config();
 
+console.log("Opening MySQL DB connection to exhibition_center")
 const pool = mysql.createPool({
   connectionLimit: 100,
   password: process.env.DB_PASS,
@@ -18,6 +19,7 @@ let potluckdb = {} as AllDB;
 
 potluckdb.all = () => {
   return new Promise((resolve, reject) => {
+    console.log("potluck grabbing all data from the db");
     pool.query('SELECT * FROM potluck', (err, results) => {
       if (err) return reject(err);
       else return resolve(results);

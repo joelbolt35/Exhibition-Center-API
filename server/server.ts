@@ -24,12 +24,11 @@ app.set('view engine', 'ejs');
 app.get('*', (req, res, next) => {
   // TODO: Get logged in user from session ID
   const emailCookie = req.cookies.user;
+  console.log(`Grabbed email cookie: " + ${emailCookie}`);
 
   if (emailCookie) {
-    const user = {
-      email: emailCookie,
-    };
-    res.locals.user = user;
+    console.log("Setting email cookie to: " + emailCookie);
+    res.locals.user = { email: emailCookie };
   }
   next();
 })
@@ -40,5 +39,5 @@ app.use('/api', apiRouter);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
-  console.log(`App is listening on http://localhost:${PORT}`);
+  console.log(`App is listening on port ${PORT}`);
 });
