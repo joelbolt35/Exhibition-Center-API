@@ -5,8 +5,9 @@ import apiRouter from './routes/api';
 import viewsRouter from './routes/views';
 import bunyan from 'bunyan';
 
-const logger = bunyan.createLogger({name: 'server'});
+import CookiesModel from './models/CookiesModel';
 
+const logger = bunyan.createLogger({name: 'server'});
 const app: express.Application = express();
 
 // Enables express to read form values
@@ -25,10 +26,10 @@ app.set('view engine', 'ejs');
 // all routes and all templates have access to the current user.
 app.get('*', (req, res, next) => {
   // TODO: Get logged in user from session ID
-  const emailCookie = req.cookies.user;
+  const cookies = req.cookies as CookiesModel;
 
-  if (emailCookie) {
-    res.locals.user = { email: emailCookie };
+  if (cookies.user?.email) {
+    res.locals.user = cookies.user;
   }
   next();
 })

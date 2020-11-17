@@ -1,13 +1,11 @@
 import express from 'express';
 import bunyan from 'bunyan';
 
+import AuthModel from '../../models/AuthModel';
+import CookiesModel from '../../models/CookiesModel';
+
 const logger = bunyan.createLogger({name: 'views'});
 const router: express.Router = express.Router();
-
-interface userLogin {
-  email: String,
-  password: String
-}
 
 router.get('/', (req, res) => {
   logger.info("'/' Fetching index page");
@@ -20,9 +18,7 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  let user = {} as userLogin;
-  user.email = req.body.email;
-  user.password = req.body.password;
+  const user = req.body as AuthModel;
   logger.info(user, "POST /login");
   if (!user.email) {
     logger.info("POST /login - Missing Email");
@@ -37,7 +33,6 @@ router.post('/login', (req, res) => {
     });
   }
 
-  
   if (user.password === "invalid") {
     logger.info("POST /login - Invalid Password");
     return res.render('pages/login', {
@@ -45,15 +40,22 @@ router.post('/login', (req, res) => {
     });
   }
 
-  res.cookie("user", req.body.email);
+  res.cookie("user", { email: user.email });
 
   logger.info("POST /login - Success. Redirect '/'");
   res.redirect("/");
 });
 
 router.get("/logout", (req, res) => {
-  logger.info(`'/logout' Clearing user cookies (${req.cookies.user}) and Fetching login page`);
-  res.clearCookie("user");
+  const cookies = req.cookies as CookiesModel;
+  if (Object.keys(cookies.user).length !== 0) {
+    logger.info(cookies.user, "'/logout' Clearing cookies. Fetching login page");
+    res.clearCookie("user");
+  }
+  else {
+    logger.info("'/logout' Nobody was logged in. Fetching login page");
+  }
+
   res.redirect("/");
 });
 

@@ -1,6 +1,8 @@
 import mysql from 'mysql';
 import bunyan from 'bunyan';
-require('dotenv').config();
+import dotenv from 'dotenv';
+
+dotenv.config();
 const logger = bunyan.createLogger({name: 'db'});
 
 logger.info("Opening MySQL DB connection to exhibition_center")
@@ -14,10 +16,10 @@ const pool = mysql.createPool({
 });
 
 interface AllDB { 
-  all: () => Promise<any>;
+  all: () => Promise<unknown>;
 }
 
-let potluckdb = {} as AllDB;
+const potluckdb = {} as AllDB;
 
 potluckdb.all = () => {
   return new Promise((resolve, reject) => {
