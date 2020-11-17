@@ -3,6 +3,9 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import apiRouter from './routes/api';
 import viewsRouter from './routes/views';
+import bunyan from 'bunyan';
+
+const logger = bunyan.createLogger({name: 'server'});
 
 const app: express.Application = express();
 
@@ -23,10 +26,8 @@ app.set('view engine', 'ejs');
 app.get('*', (req, res, next) => {
   // TODO: Get logged in user from session ID
   const emailCookie = req.cookies.user;
-  console.log(`Grabbed email cookie: " + ${emailCookie}`);
 
   if (emailCookie) {
-    console.log("Setting email cookie to: " + emailCookie);
     res.locals.user = { email: emailCookie };
   }
   next();
@@ -38,5 +39,5 @@ app.use('/api', apiRouter);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
-  console.log(`App is listening on port ${PORT}`);
+  logger.info(`App is listening on port ${PORT}`);
 });

@@ -1,7 +1,9 @@
 import mysql from 'mysql';
+import bunyan from 'bunyan';
 require('dotenv').config();
+const logger = bunyan.createLogger({name: 'db'});
 
-console.log("Opening MySQL DB connection to exhibition_center")
+logger.info("Opening MySQL DB connection to exhibition_center")
 const pool = mysql.createPool({
   connectionLimit: 100,
   password: process.env.DB_PASS,
@@ -19,8 +21,9 @@ let potluckdb = {} as AllDB;
 
 potluckdb.all = () => {
   return new Promise((resolve, reject) => {
-    console.log("potluck grabbing all data from the db");
-    pool.query('SELECT * FROM potluck', (err, results) => {
+    const queryString = "SELECT * FROM potluck";
+    logger.info(queryString);
+    pool.query(queryString, (err, results) => {
       if (err) return reject(err);
       else return resolve(results);
     })
