@@ -1,4 +1,4 @@
-import express = require('express');
+import express from 'express';
 import potluckRouter from './potluck';
 
 const router: express.Router = express.Router();

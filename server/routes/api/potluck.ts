@@ -1,4 +1,4 @@
-import express = require('express');
+import express from 'express';
 import db from '../../db';
 
 const router: express.Router = express.Router();

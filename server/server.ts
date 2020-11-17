@@ -1,6 +1,6 @@
-import express = require('express');
-import bodyParser = require('body-parser');
-import cookieParser = require('cookie-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import apiRouter from './routes/api';
 import viewsRouter from './routes/views';
 

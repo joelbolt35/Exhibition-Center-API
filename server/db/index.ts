@@ -1,4 +1,4 @@
-import mysql = require('mysql');
+import mysql from 'mysql';
 require('dotenv').config();
 
 console.log("Opening MySQL DB connection to exhibition_center")
