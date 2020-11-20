@@ -5,7 +5,8 @@ import apiRouter from './routes/api';
 import viewsRouter from './routes/views';
 import bunyan from 'bunyan';
 
-import { CookiesModel } from './models';
+import {CookiesModel, UserModel} from './models';
+import db from "./db";
 
 const logger = bunyan.createLogger({name: 'server'});
 const app: express.Application = express();
@@ -24,12 +25,16 @@ app.set('view engine', 'ejs');
 
 // Get the current user and set the res.locals.user and res.user objects so that
 // all routes and all templates have access to the current user.
-app.get('*', (req, res, next) => {
-  // TODO: Get logged in user from session ID
+app.get('*', async (req, res, next) => {
   const cookies = req.cookies as CookiesModel;
 
-  if (cookies.user?.email) {
-    res.locals.user = cookies.user;
+  if (cookies.user) {
+    const result = await db.run("SELECT * FROM Users WHERE id = ?", [cookies.user]);
+    if (result.length === 1) {
+      const currentUser = result[0] as UserModel;
+      res.locals.user = currentUser;
+      (res as any).user = currentUser;
+    }
   }
   next();
 });

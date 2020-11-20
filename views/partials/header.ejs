@@ -8,12 +8,15 @@
       </li>
       <% if (!locals.user) { %>
       <li class="nav-item">
+        <a class="nav-link" href="/register">Register</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/login">Login</a>
       </li>
       <% } %>
       <% if (locals.user) { %>
       <li class="nav-item">
-        <a class="nav-link" href="/"><%= locals.user.email %></a>
+        <a class="nav-link" href="/">Logged In As: <strong><%= locals.user.username %></strong></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>

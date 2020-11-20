@@ -15,21 +15,32 @@ const pool = mysql.createPool({
   port: 3306,
 });
 
-interface AllDB { 
-  all: () => Promise<unknown>;
-}
-
-const potluckdb = {} as AllDB;
-
-potluckdb.all = () => {
-  return new Promise((resolve, reject) => {
-    const queryString = "SELECT * FROM potluck";
-    logger.info(queryString);
-    pool.query(queryString, (err, results) => {
+const run = (query: string, values: any) => {
+  return new Promise<any>((resolve, reject) => {
+    pool.query({
+      sql: query,
+      values
+    }, (err, results) => {
       if (err) return reject(err);
       else return resolve(results);
     });
   });
-};
+}
 
-export default potluckdb;
+const db = {
+  all: () => {
+    return new Promise((resolve, reject) => {
+      const queryString = "SELECT * FROM potluck";
+      logger.info(queryString);
+      pool.query(queryString, (err, results) => {
+        if (err) return reject(err);
+        else return resolve(results);
+      });
+    });
+  },
+  run: run,
+}
+
+
+
+export default db;
