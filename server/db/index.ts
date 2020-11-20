@@ -15,19 +15,12 @@ const pool = mysql.createPool({
   port: 3306,
 });
 
-const run = (query: string, values: any) => {
-  return new Promise<any>((resolve, reject) => {
-    pool.query({
-      sql: query,
-      values
-    }, (err, results) => {
-      if (err) return reject(err);
-      else return resolve(results);
-    });
-  });
+interface databaseInterface {
+  all: () => Promise<unknown>,
+  run: (query: string, values: unknown) => Promise<unknown>
 }
 
-const db = {
+const db: databaseInterface = {
   all: () => {
     return new Promise((resolve, reject) => {
       const queryString = "SELECT * FROM potluck";
@@ -38,9 +31,18 @@ const db = {
       });
     });
   },
-  run: run,
-}
-
-
+  run: (query, values) => {
+    logger.info(query);
+    return new Promise<unknown>((resolve, reject) => {
+      pool.query({
+        sql: query,
+        values
+      }, (err, results) => {
+        if (err) return reject(err);
+        else return resolve(results);
+      });
+    });
+  }
+};
 
 export default db;
