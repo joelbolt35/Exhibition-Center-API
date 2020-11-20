@@ -2,7 +2,7 @@ import express from 'express';
 import bunyan from 'bunyan';
 import {AuthModel, UserModel} from '../../models';
 import db from "../../db";
-const bcrypt = require('bcrypt');
+import bcrypt from "bcrypt";
 
 const logger = bunyan.createLogger({name: 'views'});
 const router: express.Router = express.Router();
@@ -33,8 +33,7 @@ router.post('/', async (req, res) => {
   }
 
   // Get the user that they are trying to login as:
-  const potentialUsers = await db.run("SELECT * FROM Users WHERE username = ?", [body.username]);
-
+  const potentialUsers = await db.run("SELECT * FROM Users WHERE username = ?", [body.username]) as [UserModel];
   if (potentialUsers.length !== 1) {
     logger.info(`POST ${currPath} - User Not Found`);
     return res.render(viewPath, {
@@ -43,7 +42,7 @@ router.post('/', async (req, res) => {
     });
   }
 
-  const potentialUser = potentialUsers[0] as UserModel;
+  const potentialUser = potentialUsers[0];
   const correctPassword = await bcrypt.compare(body.password, potentialUser.password);
 
   // if password doesn't match
@@ -56,7 +55,8 @@ router.post('/', async (req, res) => {
   }
 
   // Log the user in otherwise
-  res.cookie("user", potentialUser.id);
+  logger.info(`POST ${currPath} - Setting userID as ${potentialUser.id}`);
+  res.cookie("userID", potentialUser.id);
 
   logger.info(`POST ${currPath} - Success. Redirect '/'`);
   return res.redirect("/");

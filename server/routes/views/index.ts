@@ -20,9 +20,9 @@ router.use("/register", RegisterRouter);
 
 router.get("/logout", (req, res) => {
   const cookies = req.cookies as CookiesModel;
-  if (cookies.user && Object.keys(cookies.user).length !== 0) {
-    logger.info(cookies.user, "'/logout' Clearing cookies. Fetching login page");
-    res.clearCookie("user");
+  if (cookies.userID && Object.keys(cookies.userID).length !== 0) {
+    logger.info(cookies.userID, "'/logout' Clearing cookies. Fetching login page");
+    res.clearCookie("userID");
   }
   else {
     logger.info("'/logout' Nobody was logged in. Fetching login page");

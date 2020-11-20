@@ -1,4 +1,4 @@
-import mysql from 'mysql';
+import mysql, { QueryOptions, Query } from 'mysql';
 import bunyan from 'bunyan';
 import dotenv from 'dotenv';
 
@@ -16,8 +16,8 @@ const pool = mysql.createPool({
 });
 
 interface databaseInterface {
-  all: () => Promise<unknown>,
-  run: (query: string, values: unknown) => Promise<unknown>
+  all: () => Promise<any>,
+  run: (query: QueryOptions["sql"], values: QueryOptions["values"]) => Promise<any>
 }
 
 const db: databaseInterface = {
@@ -33,7 +33,7 @@ const db: databaseInterface = {
   },
   run: (query, values) => {
     logger.info(query);
-    return new Promise<unknown>((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       pool.query({
         sql: query,
         values

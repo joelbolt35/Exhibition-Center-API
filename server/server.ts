@@ -28,12 +28,10 @@ app.set('view engine', 'ejs');
 app.get('*', async (req, res, next) => {
   const cookies = req.cookies as CookiesModel;
 
-  if (cookies.user) {
-    const result = await db.run("SELECT * FROM Users WHERE id = ?", [cookies.user]);
+  if (cookies.userID) {
+    const result = await db.run("SELECT * FROM Users WHERE id = ?", [cookies.userID]) as [UserModel];
     if (result.length === 1) {
-      const currentUser = result[0] as UserModel;
-      res.locals.user = currentUser;
-      (res as any).user = currentUser;
+      res.locals.user = result[0];
     }
   }
   next();

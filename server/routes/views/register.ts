@@ -1,8 +1,9 @@
 import express from 'express';
 import bunyan from 'bunyan';
-import {AuthModel, PotluckModel, UserModel} from '../../models';
+import {AuthModel} from '../../models';
 import db from "../../db";
-const bcrypt = require('bcrypt');
+import bcrypt from "bcrypt";
+import {OkPacket} from "mysql";
 
 const logger = bunyan.createLogger({name: 'views'});
 const router: express.Router = express.Router();
@@ -34,8 +35,9 @@ router.post('/', async (req, res) => {
     }
 
     // Check if user already exists
-    const existingUsers = await db.run("SELECT COUNT(1) AS count FROM Users WHERE username = ?", [body.username]);
-    console.log(existingUsers);
+    const existingUsers = await db.run("SELECT COUNT(1) AS count FROM Users WHERE username = ?", [body.username]) as [{count: number}];
+    logger.info(existingUsers);
+
     if (existingUsers[0].count !== 0) {
         logger.info(`POST ${currPath} - User Exists`);
         return res.render(viewPath, {
@@ -46,10 +48,10 @@ router.post('/', async (req, res) => {
 
     // Hash password and create the user.
     const hash = await bcrypt.hash(body.password, 10);
-    const ok = await db.run("INSERT INTO Users (username, password, rank) VALUES (?, ?, 1)", [body.username, hash]);
-    logger.info(`POST ${currPath} - User Created with ID: ` + ok.insertId);
+    const ok = await db.run("INSERT INTO Users (username, password, rank) VALUES (?, ?, 1)", [body.username, hash]) as OkPacket;
+    logger.info(`POST ${currPath} - User Created with ID: ${ok.insertId}`);
 
-    res.cookie("user", ok.insertId);
+    res.cookie("userID", ok.insertId);
 
     logger.info(`POST ${currPath} - Success. Redirect '/'`);
     return res.redirect("/");
