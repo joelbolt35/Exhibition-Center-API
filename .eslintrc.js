@@ -16,7 +16,6 @@ module.exports = {
   rules: {
     "no-console": 2,
     "semi": 2,
-    "no-tabs": 1,
-    "@typescript-eslint/no-unsafe-assignment": 0
+    "quotes": ["warn", "double", { "avoidEscape": true }]
   }
 };

@@ -4,7 +4,6 @@
   "description": "",
   "main": "dist/server.js",
   "dependencies": {
-    "@types/bcrypt": "^3.0.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.14",
@@ -15,6 +14,7 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/bunyan": "^1.8.6",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.9",
@@ -23,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^4.8.0",
     "@typescript-eslint/parser": "^4.8.0",
     "eslint": "^7.13.0",
+    "module-alias": "^2.2.2",
     "nodemon": "^2.0.6",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
@@ -37,7 +38,11 @@
     "fix-lint-dry": "eslint --fix-dry-run . --ext .js,.jsx,.ts,.tsx"
   },
   "nodemonConfig": {
-    "delay": "2500"
+    "delay": 2500
+  },
+  "_moduleAliases": {
+    "@database": "dist/db/index.js",
+    "@models": "dist/models/index.js"
   },
   "author": "",
   "license": "ISC"
