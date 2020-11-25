@@ -5,7 +5,7 @@ import { db } from "@database";
 import bcrypt from "bcrypt";
 import { OkPacket } from "mysql";
 
-const logger = bunyan.createLogger({ name: "views" });
+const logger = bunyan.createLogger({ name: "views/register" });
 const router: express.Router = express.Router();
 const currPath = "/register";
 const viewPath = "pages/register";

@@ -4,7 +4,7 @@ import { AuthModel, UserModel } from "@models";
 import { db } from "@database";
 import bcrypt from "bcrypt";
 
-const logger = bunyan.createLogger({ name: "views" });
+const logger = bunyan.createLogger({ name: "views/login" });
 const router: express.Router = express.Router();
 const currPath = "/login";
 const viewPath = "pages/login";
