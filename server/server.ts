@@ -25,13 +25,13 @@ app.set("view engine", "ejs");
 
 // Get the current user and set the res.locals.user and res.user objects so that
 // all routes and all templates have access to the current user.
-app.get("*", async (req, res, next) => {
+app.all("*", async (req, res, next) => {
 	const cookies = req.cookies as CookiesModel;
 
 	if (cookies.userID) {
 		const result = await db.run("SELECT * FROM Users WHERE id = ?", [cookies.userID]) as [UserModel];
 		if (result.length === 1) {
-			res.locals.user = result[0];
+			res.locals.user = result[0];;
 		}
 	}
 	next();
