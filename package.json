@@ -31,7 +31,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node dist/server.js",
-    "dev": "NODE_ENV=development nodemon --exec \"npm run build && node dist/server.js\" -w server -w views --ext ts | bunyan",
+    "dev": "NODE_ENV=development nodemon --exec \"npm run build && node dist/server.js\" -w server -w views --ext ts --ext ejs | bunyan",
     "build": "rm -rf dist && tsc",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "fix-lint": "eslint --fix . --ext .js,.jsx,.ts,.tsx",
