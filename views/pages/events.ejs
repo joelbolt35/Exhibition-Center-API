@@ -2,41 +2,42 @@
 <html lang="en">
 
 <head>
-    <%- include('../partials/head'); %>
+	<%- include('../partials/head'); %>
 </head>
 
 <body>
 
 <header>
-    <%- include('../partials/header'); %>
+	<%- include('../partials/header'); %>
 </header>
 
 <main class="container">
-    <h1>Events</h1>
-    <% if (locals.error) { %>
-        <div class="alert alert-danger" role="alert">
-            <%= error %>
-        </div>
-    <% } %>
+	<h1>Events</h1>
+	<% if (locals.error) { %>
+		<div class="alert alert-danger" role="alert">
+			<%= error %>
+		</div>
+	<% } %>
 
-    <% if (locals.events) { %>
-        <% events.forEach(event => { %>
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title"><%= event.name %></h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><%= event.start.toLocaleDateString() %> - <%= event.end.toLocaleDateString() %></h6>
-                    <p class="card-text"><strong>Description: </strong><%= event.description %></p>
-                    <p class="card-text"><strong>Address: </strong><%= event.address %></p>
-                    <a href="<%= event.url %>" class="btn btn-primary">Go to Website</a>
-                </div>
-            </div>
-        <% }) %>
-    <% } %>
+	<% if (locals.events) { %>
+		<% events.forEach(event => { %>
+			<div class="card mb-4">
+				<div class="card-body">
+					<h5 class="card-title"><%= event.name %></h5>
+					<h6 class="card-subtitle mb-2 text-muted"><%= event.start.toLocaleDateString() %>
+						- <%= event.end.toLocaleDateString() %></h6>
+					<p class="card-text"><strong>Description: </strong><%= event.description %></p>
+					<p class="card-text"><strong>Address: </strong><%= event.address %></p>
+					<a href="<%= event.url %>" class="btn btn-primary">Go to Website</a>
+				</div>
+			</div>
+		<% }) %>
+	<% } %>
 
 </main>
 
 <footer>
-    <%- include('../partials/footer'); %>
+	<%- include('../partials/footer'); %>
 </footer>
 
 </body>
