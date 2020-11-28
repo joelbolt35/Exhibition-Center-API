@@ -2,58 +2,58 @@
 <html lang="en">
 
 <head>
-    <%- include('../partials/head'); %>
+	<%- include('../partials/head'); %>
 </head>
 
 <body>
 
 <header>
-    <%- include('../partials/header'); %>
+	<%- include('../partials/header'); %>
 </header>
 
 <main class="container">
-    <h1>Create Event</h1>
-    <% if (locals.error) { %>
-        <div class="alert alert-danger" role="alert">
-            <%= error %>
-        </div>
-    <% } %>
+	<h1>Create Event</h1>
+	<% if (locals.error) { %>
+		<div class="alert alert-danger" role="alert">
+			<%= error %>
+		</div>
+	<% } %>
 
-    <div class="row">
-        <form method="POST" class="col-md-6">
-            <div class="form-group">
-                <input id="name" type="text" name="name" class="form-control form-control-lg" placeholder="Title"
-                       value="<%= locals.name %>" required>
-            </div>
-            <div class="form-group">
+	<div class="row">
+		<form method="POST" class="col-md-6">
+			<div class="form-group">
+				<input id="name" type="text" name="name" class="form-control form-control-lg" placeholder="Title"
+				       value="<%= locals.name %>" required>
+			</div>
+			<div class="form-group">
                 <textarea id="description" name="description" class="form-control" placeholder="Description"
                           content="<%= locals.description %>" required></textarea>
-            </div>
-            <div class="form-group">
-                <input id="url" type="url" name="url" class="form-control" placeholder="URL"
-                       value="<%= locals.url %>" required>
-            </div>
-            <div class="form-group">
-                <label for="start">Start Date</label>
-                <input id="start" type="date" name="start" class="form-control"
-                       value="<%= locals.start %>" required>
-            </div>
-            <div class="form-group">
-                <label for="end">End Date</label>
-                <input id="end" type="date" name="end" class="form-control"
-                       value="<%= locals.end %>" required>
-            </div>
-            <div class="form-group">
+			</div>
+			<div class="form-group">
+				<input id="url" type="url" name="url" class="form-control" placeholder="URL"
+				       value="<%= locals.url %>" required>
+			</div>
+			<div class="form-group">
+				<label for="start">Start Date</label>
+				<input id="start" type="date" name="start" class="form-control"
+				       value="<%= locals.start %>" required>
+			</div>
+			<div class="form-group">
+				<label for="end">End Date</label>
+				<input id="end" type="date" name="end" class="form-control"
+				       value="<%= locals.end %>" required>
+			</div>
+			<div class="form-group">
                 <textarea id="address" name="address" class="form-control" placeholder="Address"
-                       content="<%= locals.address %>" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Create Event</button>
-        </form>
-    </div>
+                          content="<%= locals.address %>" required></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Create Event</button>
+		</form>
+	</div>
 </main>
 
 <footer>
-    <%- include('../partials/footer'); %>
+	<%- include('../partials/footer'); %>
 </footer>
 
 </body>
