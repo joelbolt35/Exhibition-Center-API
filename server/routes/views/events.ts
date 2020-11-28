@@ -16,14 +16,13 @@ router.post("/create", async (req, res) => {
     const body = req.body as EventModel;
     const user = res.locals.user;
 
-    try {
-        const ok = await db.run("INSERT INTO Event (created_by, name, description, start, end, url, address) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?)", [user.id, body.name, body.description, body.start, body.end, body.url, body.address]) as OkPacket;
 
-        logger.info(`POST /event/create - Event created with ID: ${ok.insertId}`);
-    } catch (e) {
-        console.log(e);
-    }
+    const ok = await db.run("INSERT INTO Event (created_by, name, description, start, end, url, address) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?)", [user.id, body.name, body.description, body.start, body.end, body.url, body.address]) as OkPacket;
+
+    logger.info(`POST /events/create - Event created with ID: ${ok.insertId}`);
+
+    res.redirect("/");
 });
 
 export default router;

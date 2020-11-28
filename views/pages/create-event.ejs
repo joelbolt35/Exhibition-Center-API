@@ -22,29 +22,29 @@
     <div class="row">
         <form method="POST" class="col-md-6">
             <div class="form-group">
-                <input id=title type="text" name="title" class="form-control form-control-lg" placeholder="Title"
-                       value="<%= locals.title %>" required>
+                <input id="name" type="text" name="name" class="form-control form-control-lg" placeholder="Title"
+                       value="<%= locals.name %>" required>
             </div>
             <div class="form-group">
                 <textarea id="description" name="description" class="form-control" placeholder="Description"
                           content="<%= locals.description %>" required></textarea>
             </div>
             <div class="form-group">
-                <input id="url" type="url" name="username" class="form-control" placeholder="URL"
+                <input id="url" type="url" name="url" class="form-control" placeholder="URL"
                        value="<%= locals.url %>" required>
             </div>
             <div class="form-group">
-                <label for="startDate">Start Date</label>
-                <input id="startDate" type="date" name="startDate" class="form-control"
-                       value="<%= locals.startDate %>" required>
+                <label for="start">Start Date</label>
+                <input id="start" type="date" name="start" class="form-control"
+                       value="<%= locals.start %>" required>
             </div>
             <div class="form-group">
-                <label for="endDate">End Date</label>
-                <input id="endDate" type="date" name="endDate" class="form-control"
-                       value="<%= locals.endDate %>" required>
+                <label for="end">End Date</label>
+                <input id="end" type="date" name="end" class="form-control"
+                       value="<%= locals.end %>" required>
             </div>
             <div class="form-group">
-                <textarea id="address" name="endDate" class="form-control" placeholder="Address"
+                <textarea id="address" name="address" class="form-control" placeholder="Address"
                        content="<%= locals.address %>" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Create Event</button>

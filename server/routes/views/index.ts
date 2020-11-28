@@ -19,7 +19,7 @@ router.use("/login", LoginRouter);
 
 router.use("/register", RegisterRouter);
 
-router.use("/event", EventsRouter);
+router.use("/events", EventsRouter);
 
 router.get("/logout", (req, res) => {
 	const cookies = req.cookies as CookiesModel;
