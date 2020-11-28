@@ -8,6 +8,28 @@ import {OkPacket} from "mysql";
 const logger = bunyan.createLogger({ name: "views/events" });
 const router: express.Router = express.Router();
 
+router.get("/", async (req, res) => {
+    // Get events and render them
+
+    let query = "";
+
+    // If super admin or participant, list all events
+    if (res.locals.user.rank === 3 || res.locals.user.rank === 1)
+        query = "SELECT * FROM Event";
+
+    // If admin, list events created by them.
+    else if (res.locals.user.rank === 2)
+        query = "SELECT * FROM Event WHERE created_by = ?";
+
+    const events = await db.run(query, [res.locals.user.id]) as {results: EventModel[]};
+    // logger.info(events);
+
+    res.render("pages/events.ejs", {
+        events,
+    });
+});
+
+
 router.get("/create", (_req, res) => {
     res.render("pages/create-event.ejs");
 });
