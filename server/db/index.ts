@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mysql, { QueryOptions } from "mysql";
 import bunyan from "bunyan";
 import dotenv from "dotenv";
@@ -17,8 +18,8 @@ const pool = mysql.createPool({
 });
 
 interface databaseInterface {
-	all: () => Promise<never>,
-	run: (query: QueryOptions["sql"], values: QueryOptions["values"]) => Promise<never>
+	all: () => Promise<any>,
+	run: (query: QueryOptions["sql"], values: QueryOptions["values"]) => Promise<any>
 }
 
 export const db: databaseInterface = {
@@ -34,7 +35,7 @@ export const db: databaseInterface = {
 	},
 	run: (query, values) => {
 		logger.info(query);
-		return new Promise<never>((resolve, reject) => {
+		return new Promise<any>((resolve, reject) => {
 			pool.query({
 				sql: query,
 				values
