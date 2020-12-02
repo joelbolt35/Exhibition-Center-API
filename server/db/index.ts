@@ -19,7 +19,7 @@ const pool = mysql.createPool({
 
 interface databaseInterface {
 	all: () => Promise<any>,
-	run: (query: QueryOptions["sql"], values: QueryOptions["values"]) => Promise<any>
+	run: (query: QueryOptions["sql"], values?: QueryOptions["values"]) => Promise<any>
 }
 
 export const db: databaseInterface = {
@@ -33,7 +33,7 @@ export const db: databaseInterface = {
 			});
 		});
 	},
-	run: (query, values) => {
+	run: (query, values = []) => {
 		logger.info(query);
 		return new Promise<any>((resolve, reject) => {
 			pool.query({

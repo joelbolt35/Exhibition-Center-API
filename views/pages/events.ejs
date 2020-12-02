@@ -18,7 +18,9 @@
 			<%= error %>
 		</div>
 	<% } %>
-
+	<% if (locals.user && locals.user.rank >= 2) { %>
+		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
+	<% } %>
 	<% if (locals.events) { %>
 		<% events.forEach(event => { %>
 			<div class="card mb-4">
@@ -29,7 +31,7 @@
 					</h6>
 					<p class="card-text"><strong>Description: </strong><%= event.description %></p>
 					<p class="card-text"><strong>Address: </strong><%= event.address %></p>
-					<a href="<%= event.url %>" class="btn btn-primary">Go to Website</a>
+					<a href="<%= event.url %>" class="btn btn-primary" target="_blank">Go to Website</a>
 				</div>
 			</div>
 		<% }) %>

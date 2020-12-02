@@ -40,6 +40,11 @@ app.all("*", async (req, res, next) => {
 app.use("/", viewsRouter);
 app.use("/api", apiRouter);
 
+
+// KEEP LAST
+app.get("*", function(req, res) {
+	res.redirect("/");
+});
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
