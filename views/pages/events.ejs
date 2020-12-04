@@ -18,7 +18,7 @@
 			<%= error %>
 		</div>
 	<% } %>
-	<% if (locals.user && locals.user.rank >= 2) { %>
+	<% if (locals.user) { %>
 		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
 	<% } %>
 	<% if (locals.events) { %>
@@ -30,7 +30,11 @@
 						<%= event.start.toLocaleDateString() %> - <%= event.end.toLocaleDateString() %>
 					</h6>
 					<p class="card-text"><strong>Description: </strong><%= event.description %></p>
-					<p class="card-text"><strong>Address: </strong><%= event.address %></p>
+					<p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>, <%= event.state %> <%= event.zipCode %></p>
+					<% if (events.address2) { %>
+						<p class="card-text"><strong>Additional: </strong><%= event.address2 %></p>
+					<% } %>
+					<p class="card-text"><strong>Website: </strong><%= event.url %></p>
 					<a href="<%= event.url %>" class="btn btn-primary" target="_blank">Go to Website</a>
 				</div>
 			</div>

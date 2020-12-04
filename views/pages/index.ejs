@@ -16,9 +16,10 @@
 		<h1>Welcome!</h1>
 		<% if (locals.user) { %>
 			<p><strong>Logged in As: </strong><%= user.username %></p>
-			<p><strong>User Type: </strong><%= (['Participant', 'Admin', 'Super Admin'][user.rank - 1]) %></p>
+			<p><strong>User Type: </strong><%= (['Participant', 'Super Admin'][user.rank - 1]) %></p>
 
-			<% if (user.rank === 2) { %>
+
+			<% if (user) { %>
 				<a href="/events/create" class="btn btn-primary">Create Event</a>
 			<% } %>
 		<% } %>
