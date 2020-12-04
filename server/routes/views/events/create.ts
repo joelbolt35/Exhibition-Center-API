@@ -11,20 +11,31 @@ const viewPath = "pages/events/create";
 
 router.get("/", (_req, res) => {
 	const user = res.locals.user as UserModel;
-	if (!user || user.rank < 2)
+	if (!user)
 		return res.redirect("/");
 	logger.info(`GET ${currPath}`);
 	res.render(viewPath);
 });
 
 router.post("/", async (req, res) => {
-	const body = req.body as EventModel;
+	const event = req.body as EventModel;
 	const User = res.locals.user as UserModel;
 	logger.info(req.body, `POST ${currPath}`);
 	const ok = await db.run(
-		"INSERT INTO Event (created_by, name, description, start, end, url, address) " +
-		"VALUES (?, ?, ?, ?, ?, ?, ?)",
-		[User.id, body.name, body.description, body.start, body.end, body.url, body.address]) as OkPacket;
+		"INSERT INTO Event (created_by, name, description, start, end, url, address, address2, city, state, zipCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
+		[
+			User.id,
+			event.name,
+			event.description,
+			event.start,
+			event.end,
+			event.url,
+			event.address,
+			event.address2,
+			event.city,
+			event.state,
+			event.zipCode
+		]) as OkPacket;
 
 	logger.info(`POST ${currPath} - Event created with ID: ${ok.insertId}`);
 
