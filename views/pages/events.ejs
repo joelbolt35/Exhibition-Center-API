@@ -25,20 +25,27 @@
 		<% events.forEach(event => { %>
 			<div class="card mb-4">
 				<div class="card-body">
-					<h5 class="card-title"><%= event.name %></h5>
+					<a href="/events/<%= event.id %>">
+						<h5 class="card-title"><%= event.name %></h5>
+					</a>
 					<h6 class="card-subtitle mb-2 text-muted">
 						<%= event.start.toLocaleDateString() %> - <%= event.end.toLocaleDateString() %>
 					</h6>
 					<p class="card-text"><strong>Description: </strong><%= event.description %></p>
 					<p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>, <%= event.state %> <%= event.zipCode %></p>
-					<% if (events.address2) { %>
+					<% if (event.address2) { %>
 						<p class="card-text"><strong>Additional: </strong><%= event.address2 %></p>
 					<% } %>
-					<p class="card-text"><strong>Website: </strong><%= event.url %></p>
-					<a href="<%= event.url %>" class="btn btn-primary" target="_blank">Go to Website</a>
-					<% if (locals.user) { %>
-						<a class="btn btn-secondary" href="/events/<%=event.id%>/register">Register for Event</a>
-					<% } %>
+					<form action="/events/<%=event.id%>/register" method="post">
+						<% if (locals.user) { %>
+							<% if (!event.registered) { %>
+								<button type="submit" class="btn btn-primary">Register for Event</button>
+							<% } else { %>
+								<button disabled class="btn btn-primary">Registered</button>
+							<% } %>
+						<% } %>
+						<a href="<%= event.url %>" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Go to Website</a>
+					</form>
 				</div>
 			</div>
 		<% }) %>

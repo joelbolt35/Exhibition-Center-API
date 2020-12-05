@@ -28,6 +28,8 @@ app.set("view engine", "ejs");
 app.all("*", async (req, res, next) => {
 	const cookies = req.cookies as CookiesModel;
 
+	res.locals.path = req.path;
+
 	if (cookies.userID) {
 		const result = await db.run("SELECT * FROM Users WHERE id = ?", [cookies.userID]) as [UserModel];
 		if (result.length === 1) {
