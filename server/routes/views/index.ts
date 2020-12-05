@@ -3,6 +3,7 @@ import bunyan from "bunyan";
 import LoginRouter from "./login";
 import RegisterRouter from "./register";
 import EventsRouter from "./events";
+import SuperAdminRouter from "./superadmin";
 import { CookiesModel } from "@models";
 
 const logger = bunyan.createLogger({ name: "views" });
@@ -20,6 +21,8 @@ router.use("/login", LoginRouter);
 router.use("/register", RegisterRouter);
 
 router.use("/events", EventsRouter);
+
+router.use("/superadmin", SuperAdminRouter);
 
 router.get("/logout", (req, res) => {
 	const cookies = req.cookies as CookiesModel;

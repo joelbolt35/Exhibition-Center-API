@@ -10,6 +10,11 @@
 				<li class="nav-item <%= (locals.path === '/events' ? 'active' : '')%>">
 					<a class="nav-link" href="/events">Events</a>
 				</li>
+				<% if (locals.user && user.rank === 2) { %>
+					<li class="nav-item <%= (locals.path === '/superadmin' ? 'active' : '')%>">
+						<a class="nav-link" href="/superadmin">Superadmin Interface</a>
+					</li>
+				<% } %>
 			</ul>
 			<ul class="navbar-nav ml-md-auto">
 				<% if (!locals.user) { %>

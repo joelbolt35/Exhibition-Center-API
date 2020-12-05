@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body>
+
+<header>
+    <%- include('../partials/header'); %>
+</header>
+
+<main class="container">
+    <h1>Superadmin Interface</h1>
+    <h3 class="mb-3">Users:</h3>
+
+    <% if (locals.users) { %>
+        <% users.forEach(user => { %>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>
+                        <span class="text-secondary">Username:</span> <%= user.username %>
+                        <% if (user.rank === 2) { %>
+                            <span class="badge badge-warning">Superadmin</span>
+                        <% } %>
+                    </h5>
+                    <div>
+                    <strong>Created Events: </strong>
+                    <% if (user.created.length === 0) { %><span class="text-secondary">None</span><% } %>
+                    <% user.created.forEach((event, i) => { %>
+                        <a href="/events/<%= event.id%>"><%= event.name%></a><% if (i !== user.created.length - 1) { %>, <% } %>
+                    <% }) %>
+                    </div>
+                    <strong>Participated Events: </strong>
+                    <% if (user.participating.length === 0) { %><span class="text-secondary">None</span><% } %>
+                    <% user.participating.forEach((event, i) => { %>
+                        <a href="/events/<%= event.id%>"><%= event.name%></a><% if (i !== user.participating.length - 1) { %>, <% } %>
+                    <% }) %>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+
+</html>
