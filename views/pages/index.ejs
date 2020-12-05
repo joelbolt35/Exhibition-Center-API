@@ -12,16 +12,18 @@
 </header>
 
 <main class="container">
-	<div class="jumbotron">
-		<h1>Welcome!</h1>
+	<div class="jumbotron pt-4 pb-4">
+		<h1>Database Group Project</h1>
+		<h3 class="text-secondary pb-4">by Group 18</h3>
 		<% if (locals.user) { %>
 			<p><strong>Logged in As: </strong><%= user.username %></p>
+
 			<p><strong>User Type: </strong><%= (['Participant', 'Super Admin'][user.rank - 1]) %></p>
+		<% } %>
+		<a href="/events" class="btn btn-primary">View Events</a>
 
-
-			<% if (user) { %>
-				<a href="/events/create" class="btn btn-primary">Create Event</a>
-			<% } %>
+		<% if (user) { %>
+			<a href="/events/create" class="btn btn-secondary">Create Event</a>
 		<% } %>
 	</div>
 </main>

@@ -15,6 +15,12 @@ export type EventModel = {
 	city: string,
 	state: string,
 	zipCode: string,
+	registered: boolean; // Not stored in DB, filled in by the server on the event page if the user is registered
+}
+
+export type EventUserModel = {
+	event_ID: number;
+	user_ID: number;
 }
 
 export function cleanEvent(event: EventModel): EventModel {

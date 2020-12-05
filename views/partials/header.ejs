@@ -1,29 +1,31 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-	<a class="navbar-brand" href="#">Database Project</a>
+	<div class="container">
+		<a class="navbar-brand" href="#">COP4710 Project</a>
 
-	<div class="collapse navbar-collapse">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-				<a class="nav-link" href="/">Home</a>
-			</li>
-			<li class="nav-item active">
-				<a class="nav-link" href="/events">Events</a>
-			</li>
-		</ul>
-		<ul class="navbar-nav ml-md-auto">
-			<% if (!locals.user) { %>
-				<li class="nav-item active">
-					<a class="nav-link" href="/register">Register</a>
+		<div class="collapse navbar-collapse">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item <%= (locals.path === '/' ? 'active' : '')%>">
+					<a class="nav-link" href="/">Home</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/login">Login</a>
+				<li class="nav-item <%= (locals.path === '/events' ? 'active' : '')%>">
+					<a class="nav-link" href="/events">Events</a>
 				</li>
-			<% } %>
-			<% if (locals.user) { %>
-				<li class="nav-item active">
-					<a class="nav-link" href="/logout">Logout</a>
-				</li>
-			<% } %>
-		</ul>
+			</ul>
+			<ul class="navbar-nav ml-md-auto">
+				<% if (!locals.user) { %>
+					<li class="nav-item active">
+						<a class="nav-link" href="/register">Register</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/login">Login</a>
+					</li>
+				<% } %>
+				<% if (locals.user) { %>
+					<li class="nav-item active">
+						<a class="nav-link" href="/logout">Logout</a>
+					</li>
+				<% } %>
+			</ul>
+		</div>
 	</div>
 </nav>
