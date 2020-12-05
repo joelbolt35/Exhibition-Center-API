@@ -16,6 +16,7 @@
 		<h1>Create Event</h1>
 		<% if (locals.error) { %>
 			<div class="alert alert-danger" role="alert">
+				ERROR<br>
 				<%= error %>
 			</div>
 		<% } %>
@@ -25,23 +26,25 @@
 		<form method="POST" id="eventForm">
 			<div class="form-group">
 				<label for="name"></label>
-				<input id="name" type="text" name="name" class="form-control form-control-lg" placeholder="Title" required>
+				<input id="name" type="text" name="name" class="form-control form-control-lg" placeholder="Title"
+				       value="<%= locals.name %>" required>
 			</div>
 			<div class="form-group">
 				<label for="description"></label>
-				<textarea id="description" name="description" class="form-control" placeholder="Description" required></textarea>
+				<textarea id="description" name="description" class="form-control" placeholder="Description" required><%= locals.description %></textarea>
 			</div>
 			<div class="form-group">
 				<label for="url"></label>
-				<input id="url" type="url" name="url" class="form-control" placeholder="https://www.example.com/" required>
+				<input id="url" type="url" name="url" class="form-control" placeholder="https://www.example.com/"
+				       value="<%= locals.url %>" required>
 			</div>
 			<div class="form-group">
 				<label for="start">Start Date</label>
-				<input id="start" type="date" name="start" class="form-control" required>
+				<input id="start" type="date" name="start" class="form-control" value="<%= locals.start %>" required>
 			</div>
 			<div class="form-group">
 				<label for="end">End Date</label>
-				<input id="end" type="date" name="end" class="form-control" required>
+				<input id="end" type="date" name="end" class="form-control" value="<%= locals.end %>" required>
 			</div>
 
 
@@ -124,7 +127,7 @@
 			document.getElementById("autocomplete"),
 			{
 				types: ["address"],
-				componentRestrictions: {country: "us"}
+				componentRestrictions: { country: "us" }
 			}
 		);
 
@@ -154,8 +157,7 @@
 			const addressType = component.types[0];
 
 			if (componentForm[addressType]) {
-				const val = component[componentForm[addressType]];
-				document.getElementById(addressType).value = val;
+				document.getElementById(addressType).value = component[componentForm[addressType]];
 			}
 		}
 		document.getElementById("address").value =

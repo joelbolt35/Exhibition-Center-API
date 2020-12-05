@@ -1,6 +1,6 @@
 import express from "express";
 import bunyan from "bunyan";
-import { CookiesModel, EventModel, UserModel } from "@models";
+import { EventModel, UserModel } from "@models";
 import CreateEvent from "./events/create";
 import { db } from "@database";
 
@@ -21,6 +21,14 @@ router.get("/", async (req, res) => {
 	res.render(viewPath, {
 		events,
 	});
+});
+
+router.get("/:eventID/register", (req, res) => {
+	const user = res.locals.user as UserModel;
+	if (!user)
+		return res.redirect("/");
+	logger.info(`GET ${currPath}/:eventID/register`);
+	res.send(`${user.username} is registering to eventID ${req.params.eventID}...`);
 });
 
 export default router;

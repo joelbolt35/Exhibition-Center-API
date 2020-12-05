@@ -16,3 +16,15 @@ export type EventModel = {
 	state: string,
 	zipCode: string,
 }
+
+export function cleanEvent(event: EventModel): EventModel {
+	event.zipCode = event.zipCode.trim();
+	event.city = event.city.trim();
+	event.address = event.address.trim();
+	event.name = event.name.trim();
+	event.address2 = event.address2.trim();
+	event.description = event.description.trim();
+	event.state = event.state.trim();
+	event.url = event.url.trim();
+	return event;
+}
