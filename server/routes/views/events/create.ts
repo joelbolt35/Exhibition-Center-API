@@ -1,6 +1,7 @@
 import express from "express";
 import bunyan from "bunyan";
-import { EventModel, UserModel } from "@models";
+import moment from "moment";
+import { EventModel, UserModel, cleanEvent } from "@models";
 import { db } from "@database";
 import { OkPacket } from "mysql";
 
@@ -18,9 +19,39 @@ router.get("/", (_req, res) => {
 });
 
 router.post("/", async (req, res) => {
-	const event = req.body as EventModel;
+	const event = cleanEvent(req.body);
 	const User = res.locals.user as UserModel;
-	logger.info(req.body, `POST ${currPath}`);
+	logger.info(`POST ${currPath}`);
+
+	const overlappedAddresses = await db.run("SELECT * FROM Event WHERE address=? AND address2=? AND city=? AND state=? AND zipCode=?", [
+		event.address,
+		event.address2,
+		event.city,
+		event.state,
+		event.zipCode,
+	]) as EventModel[];
+
+	let errorMessage = "";
+	if (moment(event.end).isBefore(event.start, "day")) {
+		errorMessage = "End Date is before Start Date";
+	}
+	if (errorMessage === "") {
+		for (let i = 0; i < overlappedAddresses.length; i++) {
+			const endBefore = moment(overlappedAddresses[i].end).isBefore(event.start, "day");
+			const startAfter = moment(event.end).isBefore(overlappedAddresses[i].start, "day");
+			if (!endBefore && !startAfter) {
+				errorMessage = `Overlap with the existing event: ${overlappedAddresses[i].name}`;
+			}
+		}
+	}
+	if (errorMessage !== "") {
+		logger.info(errorMessage);
+		return res.render(viewPath, {
+			error: errorMessage,
+			...event
+		});
+	}
+
 	const ok = await db.run(
 		"INSERT INTO Event (created_by, name, description, start, end, url, address, address2, city, state, zipCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
 		[
