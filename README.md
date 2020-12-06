@@ -70,6 +70,7 @@ This will run nodemon and watch for changes in the `server` and `views` folders.
 ```shell script
 npm run dev
 ```
+The app should now be running at http://localhost:3000
 ___
 ### Run Production
 First build the `/dist` folder.
@@ -80,3 +81,4 @@ Then run production build using
 ```shell script
 npm run start
 ```
+The app should now be running at http://localhost:3000
