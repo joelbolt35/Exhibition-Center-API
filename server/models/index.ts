@@ -8,7 +8,7 @@ export type UserModel = {
 	created: EventModel[], // Filled in by server on superadmin page
 }
 export type AuthModel = { username: string; password: string; }
-export type CookiesModel = { userID: number; }
+export type CookiesModel = { dbproj_sess: string }
 export type EventModel = {
 	id: number,
 	created_by: number,
@@ -28,6 +28,11 @@ export type EventModel = {
 export type EventUserModel = {
 	event_ID: number;
 	user_ID: number;
+}
+
+export type SessionModel = {
+	session_id: number;
+	user_id: number;
 }
 
 export function cleanEvent(event: EventModel): EventModel {
