@@ -30,8 +30,10 @@ app.all("*", async (req, res, next) => {
 
 	res.locals.path = req.path;
 
-	if (cookies.userID) {
-		const result = await db.run("SELECT * FROM Users WHERE id = ?", [cookies.userID]) as [UserModel];
+	// Lookup the user from the session ID
+	if (cookies.dbproj_sess) {
+		const result = await db.run("SELECT u.* FROM Users u INNER JOIN Sessions s ON s.session_id = ? AND s.user_id = u.id",
+			[cookies.dbproj_sess]) as [UserModel];
 		if (result.length === 1) {
 			res.locals.user = result[0];
 		}

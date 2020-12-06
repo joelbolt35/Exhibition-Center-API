@@ -25,14 +25,7 @@ router.use("/events", EventsRouter);
 router.use("/superadmin", SuperAdminRouter);
 
 router.get("/logout", (req, res) => {
-	const cookies = req.cookies as CookiesModel;
-	if (cookies.userID && Object.keys(cookies.userID).length !== 0) {
-		logger.info(cookies.userID, "'/logout' Clearing cookies. Fetching login page");
-		res.clearCookie("userID");
-	} else {
-		logger.info("'/logout' Nobody was logged in. Fetching login page");
-	}
-
+	res.clearCookie("dbproj_sess");
 	res.redirect("/");
 });
 
