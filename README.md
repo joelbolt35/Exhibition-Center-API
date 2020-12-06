@@ -40,4 +40,43 @@ Regular Users can view, register for, and create events.
    - Event address (Needs a city here to complete search requirement)
  - Step 3: Submit the event. (The event will be approved for listing
  with our online service if no conflicts).
- 
+## Setup Guide: Local Development
+### Prerequisites
+#### NVM
+We use NVM to manage Node versions.
+Follow the installation instructions at:
+
+> https://github.com/nvm-sh/nvm#installing-and-updating
+___
+### Installation
+#### Install correct node version using:
+```shell script
+nvm install v12.18.2
+```
+#### Clone Repo and install node packages
+```shell script
+git clone https://github.com/joelbolt35/Exhibition-Center-API
+cd Exhibition-Center-API
+nvm use
+npm ci
+```
+#### Add in environment variables to root directory
+`/Exhibition-Center-API/.env`
+
+You will need to get the content for the `.env` file from one of the developers.
+___
+### Run Development
+This will run nodemon and watch for changes in the `server` and `views` folders.
+```shell script
+npm run dev
+```
+___
+### Run Production
+First build the `/dist` folder.
+```shell script
+npm run build
+```
+Then run production build using
+```shell script
+npm run start
+```
