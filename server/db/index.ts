@@ -8,6 +8,7 @@ dotenv.config();
 const logger = bunyan.createLogger({ name: "db" });
 
 logger.info("Opening MySQL DB connection to exhibition_center");
+logger.info(process.env.DB_HOST);
 const pool = mysql.createPool({
 	connectionLimit: 100,
 	password: process.env.DB_PASS,
