@@ -5,8 +5,8 @@ import "module-alias/register";
 import apiRouter from "./routes/api";
 import viewsRouter from "./routes/views";
 import bunyan from "bunyan";
-import { CookiesModel, UserModel } from "@models";
-import { db } from "@database";
+import {CookiesModel, UserModel} from "./models";
+import {db} from "./db";
 
 const logger = bunyan.createLogger({ name: "server" });
 const app: express.Application = express();
