@@ -3,6 +3,7 @@ import bunyan from "bunyan";
 import LoginRouter from "./login";
 import RegisterRouter from "./register";
 import EventsRouter from "./events";
+import myEventsRouter from "./myEvents";
 import SuperAdminRouter from "./superadmin";
 import { CookiesModel } from "@models";
 
@@ -21,6 +22,8 @@ router.use("/login", LoginRouter);
 router.use("/register", RegisterRouter);
 
 router.use("/events", EventsRouter);
+
+router.use("/myEvents", myEventsRouter);
 
 router.use("/superadmin", SuperAdminRouter);
 

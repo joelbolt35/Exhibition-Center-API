@@ -12,33 +12,17 @@
 </header>
 
 <main class="container">
-	<h1>Events</h1>
+	<h1>My Events</h1>
 	<% if (locals.error) { %>
 		<div class="alert alert-danger" role="alert">
 			<%= error %>
 		</div>
 	<% } %>
-	<% if (locals.user) { %>
-		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
-		<a class="btn btn-primary mb-4" href="/myEvents">My Events</a>
-		<div class="btn-group">
-			<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			  Action
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Action</a>
-			  <a class="dropdown-item" href="#">Another action</a>
-			  <a class="dropdown-item" href="#">Something else here</a>
-			  <div class="dropdown-divider"></div>
-			  <a class="dropdown-item" href="#">Separated link</a>
-			</div>
-		  </div>
-
-	<% } %>
+    <a class="btn btn-primary mb-4" href="/events">Back to All Events</a>
 	
-	<% if (locals.events) { %>
-		<% events.forEach(event => { %>
-			<% if (event.created_by == 4) { %>
+	<% if (locals.myEvents) { %>
+		<% myEvents.forEach(event => { %>
+			<% if (event.created_by == locals.user.id) { %>
 				<div class="card mb-4">
 					<div class="card-body">
 						<a href="/events/<%= event.id %>">
