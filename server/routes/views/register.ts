@@ -1,9 +1,9 @@
 import express from "express";
 import bunyan from "bunyan";
-import { AuthModel } from "@models";
-import { db } from "@database";
 import bcrypt from "bcrypt";
 import { OkPacket } from "mysql";
+import {AuthModel} from "../../models";
+import {db} from "../../db";
 
 const logger = bunyan.createLogger({ name: "views/register" });
 const router: express.Router = express.Router();
