@@ -1,10 +1,10 @@
 import express from "express";
 import bunyan from "bunyan";
 import crypto from "crypto";
-import { AuthModel, UserModel } from "@models";
-import { db } from "@database";
 import bcrypt from "bcrypt";
 import {OkPacket} from "mysql";
+import {AuthModel, UserModel} from "../../models";
+import {db} from "../../db";
 
 const logger = bunyan.createLogger({ name: "views/login" });
 const router: express.Router = express.Router();

@@ -1,9 +1,9 @@
 import express from "express";
 import bunyan from "bunyan";
 import moment from "moment";
-import { EventModel, UserModel, cleanEvent } from "@models";
-import { db } from "@database";
 import { OkPacket } from "mysql";
+import {cleanEvent, EventModel, UserModel} from "../../../models";
+import {db} from "../../../db";
 
 const logger = bunyan.createLogger({ name: "views/events/create" });
 const router: express.Router = express.Router();

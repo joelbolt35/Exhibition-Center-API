@@ -5,7 +5,6 @@ import RegisterRouter from "./register";
 import EventsRouter from "./events";
 import myEventsRouter from "./myEvents";
 import SuperAdminRouter from "./superadmin";
-import { CookiesModel } from "@models";
 
 const logger = bunyan.createLogger({ name: "views" });
 const router: express.Router = express.Router();
