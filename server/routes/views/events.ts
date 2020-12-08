@@ -17,7 +17,50 @@ router.get("/", async (req, res) => {
 	// Get events and render them
 	logger.info(`GET ${currPath}`);
 	const query = "SELECT * FROM Event";
-	const events = await db.run(query) as EventModel[];
+	let events = await db.run(query) as EventModel[];
+
+	if(req.query.filterby !== undefined)
+	{
+		const filterBy = req.query.filterby!.toString()
+		switch (filterBy) {
+			case "owned": {
+				events = events.filter(function (event) {
+					logger.info(event.created_by === res.locals.user.id);
+					return event.created_by === res.locals.user.id
+				})
+				break;
+			}
+			case "currentactive": {
+				logger.info("currentactive");
+				const today = new Date()
+				events = events.filter(function (event) {
+					return event.created_by === res.locals.user.id && event.start <= today && today <= event.end
+				})
+				break;
+			}
+			case "city": {
+				logger.info("city");
+				events = events.filter(function (event) {
+					return event.city.toLocaleLowerCase() === req.query.city
+				})
+				break;
+			}
+			case "date": {
+				logger.info("date");
+				if(req.query.start !== undefined && req.query.end !== undefined)
+				{
+					const start = new Date(req.query.start!.toString())
+					const end = new Date(req.query.end!.toString())
+					events = events.filter(function (event) {
+						return start <= event.start && event.end <= end
+					})
+				}
+				break;
+			}
+		}
+	}
+
+	logger.info(events);
 
 	// If the user is logged in, get all the events they are registered for and see if they are registered for each event.
 	if (user) {
