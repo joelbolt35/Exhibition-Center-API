@@ -32,10 +32,11 @@
 	<% } %>
 	<% if (locals.user) { %>
 		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
-		<a class="btn btn-primary mb-4" href="/myEvents">My Events</a>
 	<% } %>
 
-	<% if (locals.user) { %>
+	<% if (locals.user && !locals.filtering) { %>
+		<a class="btn btn-primary mb-4" href="/myEvents">My Events</a>
+		
 		<form class="form-inline">
 
 			<div class="form-group mx-sm-3 mb-2">

@@ -18,12 +18,15 @@ router.get("/", async (req, res) => {
 	logger.info(`GET ${currPath}`);
 	const query = "SELECT * FROM Event";
 	let events = await db.run(query) as EventModel[];
+	let filtering = false;
 
 	if(req.query.filterby !== undefined)
 	{
 		const filterBy = req.query.filterby!.toString()
 		switch (filterBy) {
 			case "owned": {
+				filtering = true;
+				
 				events = events.filter(function (event) {
 					logger.info(event.created_by === res.locals.user.id);
 					return event.created_by === res.locals.user.id
@@ -31,7 +34,8 @@ router.get("/", async (req, res) => {
 				break;
 			}
 			case "currentactive": {
-				logger.info("currentactive");
+				filtering = true;
+				
 				const today = new Date()
 				events = events.filter(function (event) {
 					return event.created_by === res.locals.user.id && event.start <= today && today <= event.end
@@ -39,14 +43,16 @@ router.get("/", async (req, res) => {
 				break;
 			}
 			case "city": {
-				logger.info("city");
+				filtering = true;
+				
 				events = events.filter(function (event) {
 					return event.city.toLocaleLowerCase() === req.query.city
 				})
 				break;
 			}
 			case "date": {
-				logger.info("date");
+				filtering = true;
+
 				if(req.query.start !== undefined && req.query.end !== undefined)
 				{
 					const start = new Date(req.query.start!.toString())
@@ -76,7 +82,7 @@ router.get("/", async (req, res) => {
 
 	res.render(viewPath, {
 		events,
-		
+		filtering
 	});
 });
 
