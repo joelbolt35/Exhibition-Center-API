@@ -15,6 +15,12 @@
 	function redirectToCityFilter() {
 		window.location = window.location + "?filterby=city&city=" + document.getElementById("filterCityName").value;
 	}
+
+	function redirectToDateFilter() {
+		window.location = window.location + "?filterby=date" + 
+		"&start=" + document.getElementById("filterStartDate").value.replaceAll("-", "%2F") +
+		"&end=" + document.getElementById("filterEndDate").value.replaceAll("-", "%2F");
+	}
 </script>
 
 <main class="container">
@@ -36,13 +42,13 @@
 			  <label for="filterCity" class="sr-only">City</label>
 			  <input type="text" class="form-control" id="filterCityName" placeholder="City">
 			</div>
-			<a href="#" onclick="redirectToCityFilter();return false;"  class="btn btn-primary mb-2">Filter By City</button>
+			<a href="#" onclick="redirectToCityFilter();return false;" class="btn btn-primary mb-2">Filter By City</a>
 			<div class="form-group mx-sm-3 mb-2">
 			<label for="filterCity" class="sr-only">Date</label>
 			<input type="date" class="form-control" id="filterStartDate" placeholder="Start Date">
 			<input type="date" class="form-control" id="filterEndDate" placeholder="End Date">
 		  </div>
-		  <button type="submit" class="btn btn-primary mb-2">Filter By Date</button>
+		  <a href="#" onclick="redirectToDateFilter();return false;">Filter By Date</a>
 		</form>
 
 		<p><tt id="results"></tt></p>
