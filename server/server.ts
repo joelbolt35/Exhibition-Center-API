@@ -5,8 +5,8 @@ import "module-alias/register";
 import apiRouter from "./routes/api";
 import viewsRouter from "./routes/views";
 import bunyan from "bunyan";
-import {CookiesModel, UserModel} from "./models";
-import {db} from "./db";
+import { CookiesModel, UserModel } from "./models";
+import { db } from "./db";
 
 const logger = bunyan.createLogger({ name: "server" });
 const app: express.Application = express();
@@ -46,7 +46,7 @@ app.use("/api", apiRouter);
 
 
 // KEEP LAST
-app.get("*", function(req, res) {
+app.get("*", function (req, res) {
 	res.redirect("/");
 });
 const PORT = process.env.PORT || 3000;
