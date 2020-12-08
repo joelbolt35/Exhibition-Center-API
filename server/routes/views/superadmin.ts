@@ -14,9 +14,24 @@ router.get("/", async (req, res) => {
 
 	// Get events and render them
 	logger.info(`GET ${currPath}`);
-	const users = await db.run("SELECT * FROM Users") as UserModel[];
+	let users = await db.run("SELECT * FROM Users") as UserModel[];
 	const events = await db.run("SELECT * FROM Event") as EventModel[];
 	const eventUsers = await db.run("SELECT * FROM EventUsers") as EventUserModel[];
+	
+	let filtering = false;
+	if (req.query.filterby !== undefined) {
+		const filterBy = req.query.filterby?.toString();
+		switch (filterBy) {
+			case "user": {
+				filtering = true;
+				users = users.filter(function (user) {
+					return user.username.toLocaleLowerCase() === req.query.user?.toString().toLocaleLowerCase();
+				});
+				break;
+			}
+		}
+	}
+
 
 	// Loop through all the users to see what events they created or participated in.
 	for (const user of users) {
@@ -26,7 +41,8 @@ router.get("/", async (req, res) => {
 	}
 
 	res.render(viewPath, {
-		users
+		users,
+		filtering
 	});
 });
 

@@ -11,9 +11,34 @@
 	<%- include('../partials/header'); %>
 </header>
 
+<script>
+	function redirectToUserFilter() {
+		const base = window.location.origin + "/superadmin";
+		const filterBy = "filterby=user";
+		const user = "user=" + document.getElementById("filterUser").value;
+		window.location = base + "?" + filterBy + "&" + user;
+	}
+</script>
+
 <main class="container">
 	<h1>Superadmin Interface</h1>
 	<h3 class="mb-3">Users:</h3>
+
+	<% if (locals.users && locals.filtering) { %>
+		<a class="btn btn-danger mb-4" href="/superadmin">Clear Filters</a>
+	<% } %>
+	
+	<% if (locals.users && !locals.filtering) { %>
+		<div>
+			<form class="form-inline" onsubmit="redirectToUserFilter();return false;">
+				<div class="form-group mx-sm-3 mb-2">
+					<label for="filterUser" class="sr-only">User</label>
+					<input type="text" class="form-control" id="filterUser" placeholder="User Name">
+				</div>
+				<input class="btn btn-secondary mb-2" type="submit" value="Filter by User">
+			</form>
+		</div>
+	<% } %>
 
 	<% if (locals.users) { %>
 		<% users.forEach(user => { %>
