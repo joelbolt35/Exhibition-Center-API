@@ -32,10 +32,12 @@
 	<% } %>
 	<% if (locals.user) { %>
 		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
+		<br>
 	<% } %>
 
 	<% if (locals.user && !locals.filtering) { %>
-		<a class="btn btn-primary mb-4" href="?filterby=owned">My Events</a>
+		<div>
+		<a class="btn btn-secondary mb-4" href="?filterby=owned">My Events</a>
 		
 		<form class="form-inline">
 			<div class="form-group mx-sm-3 mb-2">
@@ -52,6 +54,8 @@
 		  </div>
 		  <a href="#" class="btn btn-secondary mb-2" onclick="redirectToDateFilter();return false;">Filter By Date</a>
 		</form>
+		</div>
+
 
 	<% } %>
 
