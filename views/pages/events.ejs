@@ -35,7 +35,7 @@
 	<% } %>
 
 	<% if (locals.user && !locals.filtering) { %>
-		<a class="btn btn-primary mb-4" href="/myEvents">My Events</a>
+		<a class="btn btn-primary mb-4" href="?filterby=owned">My Events</a>
 		
 		<form class="form-inline">
 			<div class="form-group mx-sm-3 mb-2">
@@ -53,8 +53,10 @@
 		  <a href="#" class="btn btn-secondary mb-2" onclick="redirectToDateFilter();return false;">Filter By Date</a>
 		</form>
 
-		<a class="btn btn-danger mb-4" href="/events">Clear Filters</a>
+	<% } %>
 
+	<% if (locals.user && locals.filtering) { %>
+		<a class="btn btn-danger mb-4" href="/events">Clear Filters</a>
 	<% } %>
 
 	
