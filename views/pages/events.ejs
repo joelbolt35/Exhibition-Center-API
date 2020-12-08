@@ -21,24 +21,39 @@
 	<% if (locals.user) { %>
 		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
 		<a class="btn btn-primary mb-4" href="/myEvents">My Events</a>
-		<div class="btn-group">
-			<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			  Action
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Action</a>
-			  <a class="dropdown-item" href="#">Another action</a>
-			  <a class="dropdown-item" href="#">Something else here</a>
-			  <div class="dropdown-divider"></div>
-			  <a class="dropdown-item" href="#">Separated link</a>
+	<% } %>
+
+	<% if (locals.user) { %>
+		<form class="form-inline">
+
+			<div class="form-group mx-sm-3 mb-2">
+			  <label for="filterCity" class="sr-only">City</label>
+			  <input type="text" class="form-control" id="filterCity" placeholder="City">
 			</div>
+			<button type="submit" class="btn btn-primary mb-2">Filter By City</button>
+			<div class="form-group mx-sm-3 mb-2">
+			<label for="filterCity" class="sr-only">Date</label>
+			<input type="date" class="form-control" id="filterStartDate" placeholder="Start Date">
+			<input type="date" class="form-control" id="filterEndDate" placeholder="End Date">
 		  </div>
+		  <button type="submit" class="btn btn-primary mb-2">Filter By Date</button>
+		</form>
+
+		<p><tt id="results"></tt></p>
 
 	<% } %>
+	<script>
+		function serialize() {
+			var str = $("form").serialize();
+			$("#results").text(str);
+		}
+		$( "input[type='textt'], input[type='date']" ).on( "click", showValues );
+  		$( "select" ).on( "change", serialize );
+  		serialize();
+	</script>
 	
 	<% if (locals.events) { %>
 		<% events.forEach(event => { %>
-			<% if (event.created_by == 4) { %>
 				<div class="card mb-4">
 					<div class="card-body">
 						<a href="/events/<%= event.id %>">
@@ -64,7 +79,6 @@
 						</form>
 					</div>
 				</div>
-			<% } %>
 		<% }) %>
 	<% } %>
 
