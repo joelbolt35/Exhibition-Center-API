@@ -11,6 +11,12 @@
 	<%- include('../partials/header'); %>
 </header>
 
+<script>
+	function redirectToCityFilter() {
+		window.location = window.location + "?filterby=city&city=" + document.getElementById("filterCityName").value;
+	}
+</script>
+
 <main class="container">
 	<h1>Events</h1>
 	<% if (locals.error) { %>
@@ -28,9 +34,9 @@
 
 			<div class="form-group mx-sm-3 mb-2">
 			  <label for="filterCity" class="sr-only">City</label>
-			  <input type="text" class="form-control" id="filterCity" placeholder="City">
+			  <input type="text" class="form-control" id="filterCityName" placeholder="City">
 			</div>
-			<button type="submit" class="btn btn-primary mb-2">Filter By City</button>
+			<a href="#" onclick="redirectToCityFilter();return false;"  class="btn btn-primary mb-2">Filter By City</button>
 			<div class="form-group mx-sm-3 mb-2">
 			<label for="filterCity" class="sr-only">Date</label>
 			<input type="date" class="form-control" id="filterStartDate" placeholder="Start Date">
