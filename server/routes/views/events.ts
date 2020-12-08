@@ -1,9 +1,9 @@
 import express from "express";
 import bunyan from "bunyan";
 import CreateEvent from "./events/create";
-import {OkPacket} from "mysql";
-import {EventModel, EventUserModel, UserModel} from "../../models";
-import {db} from "../../db";
+import { OkPacket } from "mysql";
+import { EventModel, EventUserModel, UserModel } from "../../models";
+import { db } from "../../db";
 
 const logger = bunyan.createLogger({ name: "views/events" });
 const router: express.Router = express.Router();
@@ -17,7 +17,52 @@ router.get("/", async (req, res) => {
 	// Get events and render them
 	logger.info(`GET ${currPath}`);
 	const query = "SELECT * FROM Event";
-	const events = await db.run(query) as EventModel[];
+	let events = await db.run(query) as EventModel[];
+	let filtering = false;
+
+	if (req.query.filterby !== undefined) {
+		const filterBy = req.query.filterby?.toString();
+		switch (filterBy) {
+			case "owned": {
+				filtering = true;
+
+				events = events.filter(function (event) {
+					logger.info(event.created_by === user.id);
+					return event.created_by === user.id;
+				});
+				break;
+			}
+			case "currentactive": {
+				filtering = true;
+
+				const today = new Date();
+				events = events.filter(function (event) {
+					return event.created_by === user.id && event.start <= today && today <= event.end;
+				});
+				break;
+			}
+			case "city": {
+				filtering = true;
+
+				events = events.filter(function (event) {
+					return event.city.toLocaleLowerCase() === req.query.city?.toString().toLocaleLowerCase();
+				});
+				break;
+			}
+			case "date": {
+				filtering = true;
+
+				if (req.query.start !== undefined && req.query.end !== undefined) {
+					const start = new Date(req.query.start?.toString());
+					const end = new Date(req.query.end?.toString());
+					events = events.filter(function (event) {
+						return start <= event.start && event.end <= end;
+					});
+				}
+				break;
+			}
+		}
+	}
 
 	// If the user is logged in, get all the events they are registered for and see if they are registered for each event.
 	if (user) {
@@ -26,13 +71,14 @@ router.get("/", async (req, res) => {
 			user.id,
 		])) as EventUserModel[]).map(eu => eu.event_ID));
 
-		for (let event of events) {
+		for (const event of events) {
 			event.registered = registered.has(event.id);
 		}
 	}
 
 	res.render(viewPath, {
 		events,
+		filtering
 	});
 });
 
@@ -72,7 +118,7 @@ router.post("/:eventID/register", async (req, res) => {
 
 	logger.info(`GET ${user.id} registered for ${eventID}`);
 
-	res.redirect(`/events/${eventID}`)
+	res.redirect(`/events/${eventID}`);
 });
 
 export default router;

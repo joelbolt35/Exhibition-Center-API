@@ -1,7 +1,7 @@
 import express from "express";
 import bunyan from "bunyan";
-import {PotluckModel} from "../../models";
-import {db} from "../../db";
+import { PotluckModel } from "../../models";
+import { db } from "../../db";
 
 const logger = bunyan.createLogger({ name: "potluck" });
 const router: express.Router = express.Router();

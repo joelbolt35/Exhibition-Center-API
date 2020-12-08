@@ -2,9 +2,9 @@ import express from "express";
 import bunyan from "bunyan";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
-import {OkPacket} from "mysql";
-import {AuthModel, UserModel} from "../../models";
-import {db} from "../../db";
+import { OkPacket } from "mysql";
+import { AuthModel, UserModel } from "../../models";
+import { db } from "../../db";
 
 const logger = bunyan.createLogger({ name: "views/login" });
 const router: express.Router = express.Router();
@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
 
 	// Log the user in otherwise
 	// Create a cryptographically secure string to use as a session ID, and store it in the database.
-	var sessionId = crypto.randomBytes(24).toString('base64'); // 32 characters
+	const sessionId = crypto.randomBytes(24).toString("base64"); // 32 characters
 	await db.run("INSERT INTO Sessions (session_id, user_id) VALUES (?, ?)", [sessionId, potentialUser.id]) as OkPacket;
 
 	res.cookie("dbproj_sess", sessionId);

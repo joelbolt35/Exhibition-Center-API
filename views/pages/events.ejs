@@ -11,6 +11,23 @@
 	<%- include('../partials/header'); %>
 </header>
 
+<script>
+	function redirectToCityFilter() {
+		const base = window.location.origin + "/events";
+		const filterBy = "filterby=city";
+		const city = "city=" + document.getElementById("filterCityName").value;
+		window.location = base + "?" + filterBy + "&" + city;
+	}
+
+	function redirectToDateFilter() {
+		const base = window.location.origin + "/events";
+		const filterBy = "filterby=date";
+		const start = "start=" + document.getElementById("filterStartDate").value.replaceAll("-", "%2F") ;
+		const end = "end=" + document.getElementById("filterEndDate").value.replaceAll("-", "%2F");
+		window.location = base + "?" + filterBy + "&" + start + "&" + end;
+	}
+</script>
+
 <main class="container">
 	<h1>Events</h1>
 	<% if (locals.error) { %>
@@ -20,7 +37,37 @@
 	<% } %>
 	<% if (locals.user) { %>
 		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
+		<br>
 	<% } %>
+
+	<% if (locals.user && !locals.filtering) { %>
+		<div>
+			<a class="btn btn-secondary mb-4" href="?filterby=owned">My Events</a>
+
+			<form class="form-inline" onsubmit="redirectToCityFilter();return false;">
+				<div class="form-group mx-sm-3 mb-2">
+					<label for="filterCityName" class="sr-only">City</label>
+					<input type="text" class="form-control" id="filterCityName" placeholder="City">
+				</div>
+				<input class="btn btn-secondary mb-2" type="submit" value="Filter by City">
+			</form>
+			<form class="form-inline" onsubmit="redirectToDateFilter();return false;">
+				<div class="form-group mx-sm-3 mb-2">
+					<label for="filterStartDate" class="sr-only">Date</label>
+					<input type="date" class="form-control" id="filterStartDate" placeholder="Start Date">
+					<label for="filterEndDate"></label>
+					<input type="date" class="form-control" id="filterEndDate" placeholder="End Date">
+				</div>
+				<input class="btn btn-secondary mb-2" type="submit" value="Filter By Date">
+			</form>
+		</div>
+
+	<% } %>
+
+	<% if (locals.user && locals.filtering) { %>
+		<a class="btn btn-danger mb-4" href="/events">Clear Filters</a>
+	<% } %>
+
 	<% if (locals.events) { %>
 		<% events.forEach(event => { %>
 			<div class="card mb-4">
@@ -32,11 +79,12 @@
 						<%= event.start.toLocaleDateString() %> - <%= event.end.toLocaleDateString() %>
 					</h6>
 					<p class="card-text"><strong>Description: </strong><%= event.description %></p>
-					<p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>, <%= event.state %> <%= event.zipCode %></p>
+					<p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>
+						, <%= event.state %> <%= event.zipCode %></p>
 					<% if (event.address2) { %>
 						<p class="card-text"><strong>Additional: </strong><%= event.address2 %></p>
 					<% } %>
-					<form action="/events/<%=event.id%>/register" method="post">
+					<form action="/events/<%= event.id %>/register" method="post">
 						<% if (locals.user) { %>
 							<% if (!event.registered) { %>
 								<button type="submit" class="btn btn-primary">Register for Event</button>
@@ -44,7 +92,8 @@
 								<button disabled class="btn btn-primary">Registered</button>
 							<% } %>
 						<% } %>
-						<a href="<%= event.url %>" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Go to Website</a>
+						<a href="<%= event.url %>" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Go to
+							Website</a>
 					</form>
 				</div>
 			</div>

@@ -2,56 +2,59 @@
 <html lang="en">
 
 <head>
-    <%- include('../../partials/head'); %>
+	<%- include('../../partials/head'); %>
 </head>
 
 <body>
 
 <header>
-    <%- include('../../partials/header'); %>
+	<%- include('../../partials/header'); %>
 </header>
 
 <main class="container">
-    <a class="btn btn-primary mb-4" href="/events">Back to All Events</a>
-    <% if (locals.registered) { %>
-        <div class="alert alert-success" role="alert">
-            You are registered for this event!
-        </div>
-    <% } %>
-    <h1><%= event.name %></h1>
-    <% if (locals.error) { %>
-        <div class="alert alert-danger" role="alert">
-            <%= error %>
-        </div>
-    <% } %>
-    <% if (locals.event) { %>
-        <h6 class="mb-2 text-muted">
-            <%= event.start.toLocaleDateString() %> - <%= event.end.toLocaleDateString() %>
-        </h6>
-        <p class="card-text"><strong>Description: </strong><%= event.description %></p>
-        <p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>, <%= event.state %> <%= event.zipCode %></p>
-        <% if (event.address2) { %>
-            <p class="card-text"><strong>Additional: </strong><%= event.address2 %></p>
-        <% } %>
-        <p class="card-text"><strong>Website: </strong><%= event.url %></p>
-        <form action="/events/<%=event.id%>/register" method="post" class="inline-">
-            <% if (locals.user && !locals.registered) { %>
-                <button type="submit" class="btn btn-primary" href="/events/<%=event.id%>/register">Register for Event</button>
-            <% } %>
-            <a href="<%= event.url %>" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Go to Website</a>
-            <a href="https://twitter.com/intent/tweet?text=Join%20this%20event:%20https://api.joelm.dev/events/<%= event.id%>"
-               class="btn btn-link" target="_blank" rel="noopener noreferrer">Share on Twitter</a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://api.joelm.dev/events/<%= event.id%>"
-               class="btn btn-link" target="_blank" rel="noopener noreferrer">Share on Facebook</a>
-            <a href="mailto:?subject=Join%20this%20event:%20<%= event.name%>&amp;body=Join%20at:%20https://api.joelm.dev/events/<%= event.id%>"
-               class="btn btn-link" target="_blank" rel="noopener noreferrer">Share via Email</a>
-        </form>
-    <% } %>
+	<a class="btn btn-primary mb-4" href="/events">Back to All Events</a>
+	<% if (locals.registered) { %>
+		<div class="alert alert-success" role="alert">
+			You are registered for this event!
+		</div>
+	<% } %>
+	<h1><%= event.name %></h1>
+	<% if (locals.error) { %>
+		<div class="alert alert-danger" role="alert">
+			<%= error %>
+		</div>
+	<% } %>
+	<% if (locals.event) { %>
+		<h6 class="mb-2 text-muted">
+			<%= event.start.toLocaleDateString() %> - <%= event.end.toLocaleDateString() %>
+		</h6>
+		<p class="card-text"><strong>Description: </strong><%= event.description %></p>
+		<p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>
+			, <%= event.state %> <%= event.zipCode %></p>
+		<% if (event.address2) { %>
+			<p class="card-text"><strong>Additional: </strong><%= event.address2 %></p>
+		<% } %>
+		<p class="card-text"><strong>Website: </strong><%= event.url %></p>
+		<form action="/events/<%= event.id %>/register" method="post" class="inline-">
+			<% if (locals.user && !locals.registered) { %>
+			<button type="submit" class="btn btn-primary" href="/events/<%= event.id %>/register">Register for Event</button>
+			<% } %>
+			<a href="<%= event.url %>" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Go to Website</a>
+			<a
+				href="https://twitter.com/intent/tweet?text=Join%20this%20event:%20https://api.joelm.dev/events/<%= event.id %>"
+				class="btn btn-link" target="_blank" rel="noopener noreferrer">Share on Twitter</a>
+			<a href="https://www.facebook.com/sharer/sharer.php?u=https://api.joelm.dev/events/<%= event.id %>"
+			   class="btn btn-link" target="_blank" rel="noopener noreferrer">Share on Facebook</a>
+			<a
+				href="mailto:?subject=Join%20this%20event:%20<%= event.name %>&amp;body=Join%20at:%20https://api.joelm.dev/events/<%= event.id %>"
+				class="btn btn-link" target="_blank" rel="noopener noreferrer">Share via Email</a>
+		</form>
+	<% } %>
 
 </main>
 
 <footer>
-    <%- include('../../partials/footer'); %>
+	<%- include('../../partials/footer'); %>
 </footer>
 
 </body>
