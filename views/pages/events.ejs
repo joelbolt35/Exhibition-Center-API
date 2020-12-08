@@ -20,6 +20,7 @@
 	<% } %>
 	<% if (locals.user) { %>
 		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
+<<<<<<< HEAD
 		<a class="btn btn-primary mb-4" href="?filterby=owned">My Events</a>
 		<div class="btn-group">
 			<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,13 +32,43 @@
 			  <a class="dropdown-item" href="#">Something else here</a>
 			  <div class="dropdown-divider"></div>
 			  <a class="dropdown-item" href="#">Separated link</a>
+=======
+		<a class="btn btn-primary mb-4" href="/myEvents">My Events</a>
+	<% } %>
+
+	<% if (locals.user) { %>
+		<form class="form-inline">
+
+			<div class="form-group mx-sm-3 mb-2">
+			  <label for="filterCity" class="sr-only">City</label>
+			  <input type="text" class="form-control" id="filterCity" placeholder="City">
+>>>>>>> 17a62462df0d4ab3b7d8abf4936cee9f776595a8
 			</div>
+			<button type="submit" class="btn btn-primary mb-2">Filter By City</button>
+			<div class="form-group mx-sm-3 mb-2">
+			<label for="filterCity" class="sr-only">Date</label>
+			<input type="date" class="form-control" id="filterStartDate" placeholder="Start Date">
+			<input type="date" class="form-control" id="filterEndDate" placeholder="End Date">
 		  </div>
+		  <button type="submit" class="btn btn-primary mb-2">Filter By Date</button>
+		</form>
+
+		<p><tt id="results"></tt></p>
 
 	<% } %>
+	<script>
+		function serialize() {
+			var str = $("form").serialize();
+			$("#results").text(str);
+		}
+		$( "input[type='textt'], input[type='date']" ).on( "click", showValues );
+  		$( "select" ).on( "change", serialize );
+  		serialize();
+	</script>
 	
 	<% if (locals.events) { %>
 		<% events.forEach(event => { %>
+<<<<<<< HEAD
 			<div class="card mb-4">
 				<div class="card-body">
 					<a href="/events/<%= event.id %>">
@@ -57,12 +88,37 @@
 								<button type="submit" class="btn btn-primary">Register for Event</button>
 							<% } else { %>
 								<button disabled class="btn btn-primary">Registered</button>
+=======
+				<div class="card mb-4">
+					<div class="card-body">
+						<a href="/events/<%= event.id %>">
+							<h5 class="card-title"><%= event.name %></h5>
+						</a>
+						<h6 class="card-subtitle mb-2 text-muted">
+							<%= event.start.toLocaleDateString() %> - <%= event.end.toLocaleDateString() %>
+						</h6>
+						<p class="card-text"><strong>Description: </strong><%= event.description %></p>
+						<p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>, <%= event.state %> <%= event.zipCode %></p>
+						<% if (event.address2) { %>
+							<p class="card-text"><strong>Additional: </strong><%= event.address2 %></p>
+						<% } %>
+						<form action="/events/<%=event.id%>/register" method="post">
+							<% if (locals.user) { %>
+								<% if (!event.registered) { %>
+									<button type="submit" class="btn btn-primary">Register for Event</button>
+								<% } else { %>
+									<button disabled class="btn btn-primary">Registered</button>
+								<% } %>
+>>>>>>> 17a62462df0d4ab3b7d8abf4936cee9f776595a8
 							<% } %>
 						<% } %>
 						<a href="<%= event.url %>" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Go to Website</a>
 					</form>
 				</div>
+<<<<<<< HEAD
 			</div>
+=======
+>>>>>>> 17a62462df0d4ab3b7d8abf4936cee9f776595a8
 		<% }) %>
 	<% } %>
 
