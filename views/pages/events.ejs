@@ -38,32 +38,25 @@
 		<a class="btn btn-primary mb-4" href="/myEvents">My Events</a>
 		
 		<form class="form-inline">
-
 			<div class="form-group mx-sm-3 mb-2">
 			  <label for="filterCity" class="sr-only">City</label>
 			  <input type="text" class="form-control" id="filterCityName" placeholder="City">
 			</div>
-			<a href="#" onclick="redirectToCityFilter();return false;" class="btn btn-primary mb-2">Filter By City</a>
+			<a href="#" onclick="redirectToCityFilter();return false;" class="btn btn-secondary mb-2">Filter By City</a>
+		</form>
+		<form class="form-inline">
 			<div class="form-group mx-sm-3 mb-2">
 			<label for="filterCity" class="sr-only">Date</label>
 			<input type="date" class="form-control" id="filterStartDate" placeholder="Start Date">
 			<input type="date" class="form-control" id="filterEndDate" placeholder="End Date">
 		  </div>
-		  <a href="#" onclick="redirectToDateFilter();return false;">Filter By Date</a>
+		  <a href="#" class="btn btn-secondary mb-2" onclick="redirectToDateFilter();return false;">Filter By Date</a>
 		</form>
 
-		<p><tt id="results"></tt></p>
+		<a class="btn btn-danger mb-4" href="/events">Clear Filters</a>
 
 	<% } %>
-	<script>
-		function serialize() {
-			var str = $("form").serialize();
-			$("#results").text(str);
-		}
-		$( "input[type='textt'], input[type='date']" ).on( "click", showValues );
-  		$( "select" ).on( "change", serialize );
-  		serialize();
-	</script>
+
 	
 	<% if (locals.events) { %>
 		<% events.forEach(event => { %>
