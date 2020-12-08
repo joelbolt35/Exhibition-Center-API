@@ -22,7 +22,6 @@
 
 <main class="container">
 	<h1>Superadmin Interface</h1>
-	<h3 class="mb-3">Users:</h3>
 
 	<% if (locals.users && locals.filtering) { %>
 		<a class="btn btn-danger mb-4" href="/superadmin">Clear Filters</a>
@@ -40,6 +39,7 @@
 		</div>
 	<% } %>
 
+	<h3 class="mb-3">Users:</h3>
 	<% if (locals.users) { %>
 		<% users.forEach(user => { %>
 			<div class="card mb-4">
