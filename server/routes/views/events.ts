@@ -66,8 +66,6 @@ router.get("/", async (req, res) => {
 		}
 	}
 
-	logger.info(events);
-
 	// If the user is logged in, get all the events they are registered for and see if they are registered for each event.
 	if (user) {
 		// Make a set of all event IDs this user is registered for.
