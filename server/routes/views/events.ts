@@ -46,7 +46,7 @@ router.get("/", async (req, res) => {
 				filtering = true;
 				
 				events = events.filter(function (event) {
-					return event.city.toLocaleLowerCase() === req.query.city
+					return event.city.toLocaleLowerCase() === req.query.city?.toString().toLocaleLowerCase()
 				})
 				break;
 			}
