@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 	logger.info(`GET ${currPath}`);
 
 	// Query Events from DB
-	const query = "SELECT * FROM Event";
+	const query = "SELECT * FROM Event ORDER BY start";
 	let events = await db.run(query) as EventModel[];
 
 	// Query Params
