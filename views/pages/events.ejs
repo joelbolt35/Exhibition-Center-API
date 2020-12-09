@@ -36,29 +36,22 @@
 		</div>
 	<% } %>
 	<% if (locals.user) { %>
-		<a class="btn btn-primary mb-4" href="/events/create">Create Event</a>
-		<br>
+		<div class="mb-2">
+			<a class="btn btn-primary mb-2" href="/events/create">Create Event</a>
+			<a class="btn btn-secondary mb-2" href="?filterby=owned">My Events</a>
+		</div>
 	<% } %>
 
 	<% if (locals.user && !locals.filtering) { %>
-		<div>
-			<a class="btn btn-secondary mb-4" href="?filterby=owned">My Events</a>
-
+		<div class="mb-2">
 			<form class="form-inline" onsubmit="redirectToCityFilter();return false;">
-				<div class="form-group mx-sm-3 mb-2">
-					<label for="filterCityName" class="sr-only">City</label>
-					<input type="text" class="form-control" id="filterCityName" placeholder="City">
-				</div>
-				<input class="btn btn-secondary mb-2" type="submit" value="Filter by City">
+				<input type="text" class="form-control mb-2 mr-2" id="filterCityName" placeholder="City"/>
+				<button class="btn btn-secondary mb-2" type="submit">Filter by City</button>
 			</form>
 			<form class="form-inline" onsubmit="redirectToDateFilter();return false;">
-				<div class="form-group mx-sm-3 mb-2">
-					<label for="filterStartDate" class="sr-only">Date</label>
-					<input type="date" class="form-control" id="filterStartDate" placeholder="Start Date">
-					<label for="filterEndDate"></label>
-					<input type="date" class="form-control" id="filterEndDate" placeholder="End Date">
-				</div>
-				<input class="btn btn-secondary mb-2" type="submit" value="Filter By Date">
+				<input type="date" class="form-control mb-2 mr-2" id="filterStartDate" placeholder="Start Date"/>
+				<input type="date" class="form-control mb-2 mr-2" id="filterEndDate" placeholder="End Date"/>
+				<button class="btn btn-secondary mb-2" type="submit">Filter by Date</button>
 			</form>
 		</div>
 
@@ -79,8 +72,7 @@
 						<%= event.start.toLocaleDateString() %> - <%= event.end.toLocaleDateString() %>
 					</h6>
 					<p class="card-text"><strong>Description: </strong><%= event.description %></p>
-					<p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>
-						, <%= event.state %> <%= event.zipCode %></p>
+					<p class="card-text"><strong>Address: </strong><%= event.address %>, <%= event.city %>, <%= event.state %> <%= event.zipCode %></p>
 					<% if (event.address2) { %>
 						<p class="card-text"><strong>Additional: </strong><%= event.address2 %></p>
 					<% } %>
