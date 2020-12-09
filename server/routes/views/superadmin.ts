@@ -10,7 +10,7 @@ const viewPath = "pages/superadmin";
 
 router.get("/", async (req, res) => {
 	const user = res.locals.user as UserModel;
-	if (!user || user.rank !== 2) return res.send("You are not a superadmin!");
+	if (!user || user.rank !== 2) return res.redirect("/");
 
 	// Get events and render them
 	logger.info(`GET ${currPath}`);
