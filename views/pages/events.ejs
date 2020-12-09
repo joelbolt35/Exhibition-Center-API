@@ -12,19 +12,13 @@
 </header>
 
 <script>
-	function redirectToCityFilter() {
+	function redirectToFilter() {
 		const base = window.location.origin + "/events";
 		const filterBy = "filterby=city";
 		const city = "city=" + document.getElementById("filterCityName").value;
-		window.location = base + "?" + filterBy + "&" + city;
-	}
-
-	function redirectToDateFilter() {
-		const base = window.location.origin + "/events";
-		const filterBy = "filterby=date";
 		const start = "start=" + document.getElementById("filterStartDate").value.replaceAll("-", "%2F") ;
 		const end = "end=" + document.getElementById("filterEndDate").value.replaceAll("-", "%2F");
-		window.location = base + "?" + filterBy + "&" + start + "&" + end;
+		window.location = base + "?" + filterBy + "&" + city + "&" + start + "&" + end;
 	}
 </script>
 
@@ -42,19 +36,28 @@
 		</div>
 	<% } %>
 
-	<% if (locals.user && !locals.filtering) { %>
+	<% if (locals.user) { %>
 		<div class="mb-2">
-			<form class="form-inline" onsubmit="redirectToCityFilter();return false;">
-				<input type="text" class="form-control mb-2 mr-2" id="filterCityName" placeholder="City"/>
-				<button class="btn btn-secondary mb-2" type="submit">Filter by City</button>
-			</form>
-			<form class="form-inline" onsubmit="redirectToDateFilter();return false;">
-				<input type="date" class="form-control mb-2 mr-2" id="filterStartDate" placeholder="Start Date"/>
-				<input type="date" class="form-control mb-2 mr-2" id="filterEndDate" placeholder="End Date"/>
-				<button class="btn btn-secondary mb-2" type="submit">Filter by Date</button>
+			<form class="form-inline" onsubmit="redirectToFilter();return false;">
+				<div class="form-row align-items-end">
+					<div class="col">
+						<label for="filterCityName">City</label>
+						<input type="text" class="form-control mb-2 mr-2" id="filterCityName" placeholder="City" value="<%=locals.cityQuery%>" />
+					</div>
+					<div class="col">
+						<label for="filterStartDate">Start Date</label>
+						<input type="date" class="form-control mb-2 mr-2" id="filterStartDate" placeholder="Start Date" value="<%=locals.startDateQuery%>" />
+					</div>
+					<div class="col">
+						<label for="filterEndDate">End Date</label>
+						<input type="date" class="form-control mb-2 mr-2" id="filterEndDate" placeholder="End Date" value="<%=locals.endDateQuery%>" />
+					</div>
+					<div class="col">
+						<button class="btn btn-secondary mb-2" type="submit">Filter</button>
+					</div>
+				</div>
 			</form>
 		</div>
-
 	<% } %>
 
 	<% if (locals.user && locals.filtering) { %>
