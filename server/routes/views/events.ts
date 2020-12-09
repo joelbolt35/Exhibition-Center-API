@@ -78,12 +78,17 @@ router.get("/", async (req, res) => {
 		}
 	}
 
-	const reqquery = req.query;
-	logger.info(JSON.stringify(reqquery));
+	let cityQuery = req.query.city || "";
+	let startDateQuery = req.query.start || "";
+	let endDateQuery = req.query.end || "";
+	startDateQuery = startDateQuery.toString().split("/").join("-");
+	endDateQuery = endDateQuery.toString().split("/").join("-");
 	res.render(viewPath, {
 		events,
 		filtering,
-		reqquery
+		cityQuery,
+		startDateQuery,
+		endDateQuery
 	});
 });
 
