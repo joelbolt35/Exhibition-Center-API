@@ -39,10 +39,23 @@
 	<% if (locals.user) { %>
 		<div class="mb-2">
 			<form class="form-inline" onsubmit="redirectToFilter();return false;">
-				<input type="text" class="form-control mb-2 mr-2" id="filterCityName" placeholder="City" value="<%=locals.cityQuery%>" />
-				<input type="date" class="form-control mb-2 mr-2" id="filterStartDate" placeholder="Start Date" value="<%=locals.startDateQuery%>" />
-				<input type="date" class="form-control mb-2 mr-2" id="filterEndDate" placeholder="End Date"  value="<%=locals.endDateQuery%>" />
-				<button class="btn btn-secondary mb-2" type="submit">Filter</button>
+				<div class="form-row align-items-end">
+					<div class="col">
+						<label for="filterCityName">City</label>
+						<input type="text" class="form-control mb-2 mr-2" id="filterCityName" placeholder="City" value="<%=locals.cityQuery%>" />
+					</div>
+					<div class="col">
+						<label for="filterStartDate">Start Date</label>
+						<input type="date" class="form-control mb-2 mr-2" id="filterStartDate" placeholder="Start Date" value="<%=locals.startDateQuery%>" />
+					</div>
+					<div class="col">
+						<label for="filterEndDate">End Date</label>
+						<input type="date" class="form-control mb-2 mr-2" id="filterEndDate" placeholder="End Date" value="<%=locals.endDateQuery%>" />
+					</div>
+					<div class="col">
+						<button class="btn btn-secondary mb-2" type="submit">Filter</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	<% } %>

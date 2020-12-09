@@ -1,5 +1,6 @@
 import express from "express";
 import bunyan from "bunyan";
+import moment from "moment";
 import CreateEvent from "./events/create";
 import { OkPacket } from "mysql";
 import { EventModel, EventUserModel, UserModel } from "../../models";
@@ -14,53 +15,60 @@ router.use("/create", CreateEvent);
 
 router.get("/", async (req, res) => {
 	const user = res.locals.user as UserModel;
+	const requestQueries = req.query as {
+		filterby?: string,
+		city?: string,
+		start?: string,
+		end?: string,
+	};
 	// Get events and render them
 	logger.info(`GET ${currPath}`);
+
+	// Query Events from DB
 	const query = "SELECT * FROM Event";
 	let events = await db.run(query) as EventModel[];
-	let filtering = false;
 
-	if (req.query.filterby !== undefined) {
-		const filterBy = req.query.filterby?.toString();
+	// Query Params
+	const cityQuery = requestQueries.city || "";
+	let startDateQuery = requestQueries.start || "";
+	let endDateQuery = requestQueries.end || "";
+	startDateQuery = startDateQuery.split("/").join("-");
+	endDateQuery = endDateQuery.split("/").join("-");
+
+	let filtering = false;
+	if (requestQueries.filterby) {
+		const filterBy = requestQueries.filterby;
+		filtering = true;
 		switch (filterBy) {
 			case "owned": {
-				filtering = true;
-
-				events = events.filter(function (event) {
-					logger.info(event.created_by === user.id);
-					return event.created_by === user.id;
-				});
+				events = events.filter((event) =>
+					event.created_by === user.id
+				);
 				break;
 			}
 			case "currentactive": {
-				filtering = true;
-
-				const today = new Date();
-				events = events.filter(function (event) {
-					return event.created_by === user.id && event.start <= today && today <= event.end;
-				});
+				const today = moment();
+				events = events.filter((event) =>
+					event.created_by === user.id &&
+					moment(event.start).isSameOrBefore(today, "day") &&
+					moment(today).isSameOrBefore(event.end, "day")
+				);
 				break;
 			}
 			case "city": {
-				filtering = true;
-
-				if (req.query.city) {
-					events = events.filter(function (event) {
-						return event.city.toLocaleLowerCase() === req.query.city?.toString().toLocaleLowerCase();
-					});
+				if (cityQuery) {
+					events = events.filter((event) =>
+						event.city.toLocaleLowerCase() === cityQuery.toLocaleLowerCase()
+					);
 				}
-				if (req.query.start) {
-					const start = new Date(req.query.start?.toString());
-					events = events.filter(function (event) {
-						return start <= event.start;
-					});
-				}
-				if (req.query.end) {
-					const end = new Date(req.query.end?.toString());
-					events = events.filter(function (event) {
-						return event.end <= end;
-					});
-				}
+				if (startDateQuery)
+					events = events.filter((event) =>
+						moment(startDateQuery).isSameOrBefore(event.start, "day")
+					);
+				if (endDateQuery)
+					events = events.filter((event) =>
+						moment(event.end).isSameOrBefore(endDateQuery, "day")
+					);
 				break;
 			}
 		}
@@ -78,11 +86,6 @@ router.get("/", async (req, res) => {
 		}
 	}
 
-	let cityQuery = req.query.city || "";
-	let startDateQuery = req.query.start || "";
-	let endDateQuery = req.query.end || "";
-	startDateQuery = startDateQuery.toString().split("/").join("-");
-	endDateQuery = endDateQuery.toString().split("/").join("-");
 	res.render(viewPath, {
 		events,
 		filtering,
