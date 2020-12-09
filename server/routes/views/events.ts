@@ -44,19 +44,21 @@ router.get("/", async (req, res) => {
 			case "city": {
 				filtering = true;
 
-				events = events.filter(function (event) {
-					return event.city.toLocaleLowerCase() === req.query.city?.toString().toLocaleLowerCase();
-				});
-				break;
-			}
-			case "date": {
-				filtering = true;
-
-				if (req.query.start !== undefined && req.query.end !== undefined) {
+				if (req.query.city) {
+					events = events.filter(function (event) {
+						return event.city.toLocaleLowerCase() === req.query.city?.toString().toLocaleLowerCase();
+					});
+				}
+				if (req.query.start) {
 					const start = new Date(req.query.start?.toString());
+					events = events.filter(function (event) {
+						return start <= event.start;
+					});
+				}
+				if (req.query.end) {
 					const end = new Date(req.query.end?.toString());
 					events = events.filter(function (event) {
-						return start <= event.start && event.end <= end;
+						return event.end <= end;
 					});
 				}
 				break;
@@ -76,9 +78,12 @@ router.get("/", async (req, res) => {
 		}
 	}
 
+	const reqquery = req.query;
+	logger.info(JSON.stringify(reqquery));
 	res.render(viewPath, {
 		events,
-		filtering
+		filtering,
+		reqquery
 	});
 });
 
