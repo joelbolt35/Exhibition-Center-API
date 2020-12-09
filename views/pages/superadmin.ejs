@@ -26,15 +26,12 @@
 	<% if (locals.users && locals.filtering) { %>
 		<a class="btn btn-danger mb-4" href="/superadmin">Clear Filters</a>
 	<% } %>
-	
+
 	<% if (locals.users && !locals.filtering) { %>
-		<div>
+		<div class="mb-2">
 			<form class="form-inline" onsubmit="redirectToUserFilter();return false;">
-				<div class="form-group mx-sm-3 mb-2">
-					<label for="filterUser" class="sr-only">User</label>
-					<input type="text" class="form-control" id="filterUser" placeholder="User Name">
-				</div>
-				<input class="btn btn-secondary mb-2" type="submit" value="Filter by User">
+				<input type="text" class="form-control mb-2 mr-2" id="filterUser" placeholder="User Name"/>
+				<button class="btn btn-secondary mb-2" type="submit">Filter by User</button>
 			</form>
 		</div>
 	<% } %>
